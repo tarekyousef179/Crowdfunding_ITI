@@ -1,0 +1,58 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "username": "campaigner1",
+      "password": "123456",
+      "role": "campaigner",
+      "isApproved": true,
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "username": "backer1",
+      "password": "123456",
+      "role": "backer",
+      "isActive": true
+    }
+  ],
+  "campaigns": [
+    {
+      "id": 1,
+      "title": "Smart Watch for Kids",
+      "description": "A smart watch designed specifically for children.",
+      "goal": 5000,
+      "deadline": "2025-07-01",
+      "rewards": [
+        { "id": 1, "description": "Thank You Email", "minAmount": 10 },
+        { "id": 2, "description": "Free Watch Strap", "minAmount": 50 }
+      ],
+      "image": "data:image/png;base64,...",
+      "isApproved": true,
+      "creatorId": 2
+    }
+  ],
+  "pledges": [
+    {
+      "id": 1,
+      "amount": 50,
+      "rewardId": 2,
+      "campaignId": 1,
+      "userId": 3
+    }
+  ],
+  "updates": [
+    {
+      "id": 1,
+      "campaignId": 1,
+      "content": "We just hit 50% of our funding goal! Thank you!"
+    }
+  ]
+}
