@@ -1,0 +1,46 @@
+body {
+  background-color: #f5f7fa;
+}
+.sidebar {
+  padding: 15px;
+  background-color: #2c3e50;
+  height: 100vh;
+}
+.sidebar ul {
+  padding: 0;
+}
+.sidebar ul li {
+  color: white;
+  padding: 15px;
+  display: block;
+  text-decoration: none;
+}
+.sidebar ul li:hover {
+  background-color: #34495e;
+}
+.main-content {
+  padding: 20px;
+}
+.stats-card {
+  border-radius: 10px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.table th,
+.table td {
+  vertical-align: middle;
+}
+.pledge-graph {
+  height: 200px;
+  background: url("https://via.placeholder.com/400x200?text=Daily+Pledges+Graph")
+    no-repeat center;
+}
+button {
+  margin: 5px 0;
+}
+.card-body {
+  height: 150px;
+  overflow-y: auto;
+}

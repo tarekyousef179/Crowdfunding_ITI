@@ -17,6 +17,22 @@
     },
     {
       "id": 3,
+      "username": "campaigner1",
+      "password": "123456",
+      "role": "campaigner",
+      "isApproved": true,
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "username": "campaigner1",
+      "password": "123456",
+      "role": "campaigner",
+      "isApproved": true,
+      "isActive": true
+    },
+    {
+      "id": 5,
       "username": "backer1",
       "password": "123456",
       "role": "backer",
@@ -36,6 +52,34 @@
       ],
       "image": "data:image/png;base64,...",
       "isApproved": true,
+      "creatorId": 2
+    },
+    {
+      "id": 2,
+      "title": "Smart Watch for Kids",
+      "description": "A smart watch designed specifically for children.",
+      "goal": 5000,
+      "deadline": "2025-07-01",
+      "rewards": [
+        { "id": 1, "description": "Thank You Email", "minAmount": 10 },
+        { "id": 2, "description": "Free Watch Strap", "minAmount": 50 }
+      ],
+      "image": "data:image/png;base64,...",
+      "isApproved": true,
+      "creatorId": 2
+    },
+    {
+      "id": 3,
+      "title": "Smart Watch for Kids",
+      "description": "A smart watch designed specifically for children.",
+      "goal": 5000,
+      "deadline": "2025-07-01",
+      "rewards": [
+        { "id": 1, "description": "Thank You Email", "minAmount": 10 },
+        { "id": 2, "description": "Free Watch Strap", "minAmount": 50 }
+      ],
+      "image": "data:image/png;base64,...",
+      "isApproved": false,
       "creatorId": 2
     }
   ],
