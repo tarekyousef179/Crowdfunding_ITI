@@ -22,4 +22,24 @@ export class User {
       console.log(error);
     }
   };
+  static findUserByUsernameAndPassword = async function (_username, _password) {
+    try {
+      const response = await fetch("http://localhost:3000/users");
+      const allUsers = await response.json();
+
+      const foundUser = allUsers.find(({ username, password }) => username === _username && password === _password)
+
+      if(foundUser){
+        return {
+          user: foundUser
+        }
+      };
+
+      return {
+        errorMessage: "User dosn't exist"
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
