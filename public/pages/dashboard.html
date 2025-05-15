@@ -17,14 +17,13 @@
         <div class="sidebar col-md-2">
           <h4 class="text-white">CROWDFUNDING PLATFORM</h4>
           <ul>
-            <li>Dashboard</li>
+            <!-- <li>Dashboard</li> -->
             <li>Users</li>
             <li>Campaigns</li>
             <li>Pledges</li>
-            <li>Settings</li>
+            <!-- <li>Settings</li> -->
           </ul>
         </div>
-        <!-- Main Content -->
         <div class="main-content col-md-10">
           <!-- Header -->
           <div class="d-flex justify-content-between align-items-center mb-4">
@@ -76,49 +75,48 @@
             </div>
           </div>
           <!-- User Management and Pledge Overview -->
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card" id="user-card">
-                <div class="card-header">
-                  <h5>User Management</h5>
-                </div>
-                <div class="card-body">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id="user-table-body"></tbody>
-                  </table>
-                </div>
+          <div class="dashboard-item" id="usersSection">
+            <div class="card">
+              <div class="card-header">
+                <h5>User Management</h5>
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="user-table-body"></tbody>
+                </table>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-header">
-                  <h5>Recent Pledges</h5>
-                </div>
-                <div class="card-body">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Pledge</th>
-                        <th>Amount</th>
-                        <th>Backer</th>
-                      </tr>
-                    </thead>
-                    <tbody id="pledge-table-body"></tbody>
-                  </table>
-                </div>
+          </div>
+          <div class="dashboard-item" id="pledgesSection">
+            <div class="card">
+              <div class="card-header">
+                <h5>Recent Pledges</h5>
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Pledge</th>
+                      <th>Amount</th>
+                      <th>Backer</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pledge-table-body"></tbody>
+                </table>
               </div>
             </div>
           </div>
           <!-- Campaign Moderation -->
-          <div class="card mt-2">
+          <div class="card mt-2 dashboard-item" id="campaignsSection">
             <div class="card-header">
               <h5>Campaign Moderation</h5>
             </div>
