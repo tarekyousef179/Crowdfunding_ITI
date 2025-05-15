@@ -1,39 +1,44 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "username": "admin",
+      "email": "han@admin.com",
       "password": "admin123",
       "role": "admin",
       "isActive": true
     },
     {
-      "id": 2,
+      "id": "2",
       "username": "campaigner1",
+      "email": "hdbb@exam.com",
       "password": "123456",
       "role": "campaigner",
       "isApproved": true,
       "isActive": true
     },
     {
-      "id": 3,
+      "id": "3",
       "username": "campaigner1",
+      "email": "han@google.com",
       "password": "123456",
       "role": "campaigner",
       "isApproved": true,
       "isActive": true
     },
     {
-      "id": 4,
+      "id": "4",
       "username": "campaigner1",
+      "email": "jdchj@mojh.com",
       "password": "123456",
       "role": "campaigner",
       "isApproved": true,
       "isActive": true
     },
     {
-      "id": 5,
+      "id": "5",
       "username": "backer1",
+      "email": "jxbb@mjh.com",
       "password": "123456",
       "role": "backer",
       "isActive": true
@@ -41,51 +46,24 @@
   ],
   "campaigns": [
     {
-      "id": 1,
-      "title": "Smart Watch for Kids",
-      "description": "A smart watch designed specifically for children.",
-      "goal": 5000,
-      "deadline": "2025-07-01",
-      "rewards": [
-        { "id": 1, "description": "Thank You Email", "minAmount": 10 },
-        { "id": 2, "description": "Free Watch Strap", "minAmount": 50 }
-      ],
-      "image": "data:image/png;base64,...",
+      "id": "1",
+      "title": "buliding website",
+      "description": "Help me build a website",
+      "goal": "5000",
+      "ownerId": 2,
       "isApproved": true,
-      "creatorId": 2
-    },
-    {
-      "id": 2,
-      "title": "Smart Watch for Kids",
-      "description": "A smart watch designed specifically for children.",
-      "goal": 5000,
-      "deadline": "2025-07-01",
       "rewards": [
-        { "id": 1, "description": "Thank You Email", "minAmount": 10 },
-        { "id": 2, "description": "Free Watch Strap", "minAmount": 50 }
-      ],
-      "image": "data:image/png;base64,...",
-      "isApproved": true,
-      "creatorId": 2
-    },
-    {
-      "id": 3,
-      "title": "Smart Watch for Kids",
-      "description": "A smart watch designed specifically for children.",
-      "goal": 5000,
-      "deadline": "2025-07-01",
-      "rewards": [
-        { "id": 1, "description": "Thank You Email", "minAmount": 10 },
-        { "id": 2, "description": "Free Watch Strap", "minAmount": 50 }
-      ],
-      "image": "data:image/png;base64,...",
-      "isApproved": false,
-      "creatorId": 2
+        {
+          "id": 1,
+          "title": "Earle Bird",
+          "amount": 50
+        }
+      ]
     }
   ],
   "pledges": [
     {
-      "id": 1,
+      "id": "1",
       "amount": 50,
       "rewardId": 2,
       "campaignId": 1,
@@ -94,7 +72,7 @@
   ],
   "updates": [
     {
-      "id": 1,
+      "id": "1",
       "campaignId": 1,
       "content": "We just hit 50% of our funding goal! Thank you!"
     }
