@@ -3,15 +3,15 @@
     {
       "id": "1",
       "username": "admin",
-      "email": "han@admin.com",
+      "email": "admin@admin.com",
       "password": "admin123",
       "role": "admin",
       "isActive": true
     },
     {
       "id": "2",
-      "username": "campaigner1",
-      "email": "hdbb@exam.com",
+      "username": "Ahmed",
+      "email": "ahmed@gmail.com",
       "password": "123456",
       "role": "campaigner",
       "isApproved": true,
@@ -19,8 +19,8 @@
     },
     {
       "id": "3",
-      "username": "campaigner1",
-      "email": "han@google.com",
+      "username": "salma",
+      "email": "salma@gmail.com",
       "password": "123456",
       "role": "campaigner",
       "isApproved": true,
@@ -28,8 +28,8 @@
     },
     {
       "id": "4",
-      "username": "campaigner1",
-      "email": "jdchj@mojh.com",
+      "username": "omar",
+      "email": "omar@gmail.com",
       "password": "123456",
       "role": "campaigner",
       "isApproved": true,
@@ -37,8 +37,48 @@
     },
     {
       "id": "5",
-      "username": "backer1",
-      "email": "jxbb@mjh.com",
+      "username": "marieum",
+      "email": "Mariam@gmail.com",
+      "password": "123456",
+      "role": "campaigner",
+      "isActive": true
+    },
+    {
+      "id": "6",
+      "username": "Youssef",
+      "email": "Youssef@gmail.com",
+      "password": "123456",
+      "role": "campaigner",
+      "isActive": true
+    },
+    {
+      "id": "7",
+      "username": "elsayed",
+      "email": "elsayed@gmail.com",
+      "password": "123456",
+      "role": "backer",
+      "isActive": true
+    },
+    {
+      "id": "8",
+      "username": "gamal",
+      "email": "gamal@gmail.com",
+      "password": "123456",
+      "role": "backer",
+      "isActive": true
+    },
+    {
+      "id": "9",
+      "username": "hassan",
+      "email": "hassan@gmail.com",
+      "password": "123456",
+      "role": "backer",
+      "isActive": true
+    },
+    {
+      "id": "10",
+      "username": "mostafa",
+      "email": "mostafa@gmail.com",
       "password": "123456",
       "role": "backer",
       "isActive": true
@@ -47,33 +87,154 @@
   "campaigns": [
     {
       "id": 1,
-      "title": "Smart Watch for Kids",
-      "description": "A smart watch designed specifically for children.",
-      "goal": 5000,
+      "title": "Funding for Web Development Scholarship",
+      "creatorId": 2,
+      "goal": 3000,
       "deadline": "2025-07-01",
-      "rewards": [
-        { "id": 1, "description": "Thank You Email", "minAmount": 10 },
-        { "id": 2, "description": "Free Watch Strap", "minAmount": 50 }
-      ],
-      "image": "data:image/png;base64,...",
       "isApproved": true,
-      "creatorId": 2
+      "description": "Ahmed, 17 years old, from Cairo, needs funding to join a web development scholarship program.",
+      "image": "https://images.unsplash.com/photo-1637855195094-992d3d578f42?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "rewards": [{ "id": 1, "title": "Thank You Email", "amount": 20 }]
+    },
+    {
+      "id": 2,
+      "title": "Help Salma Join English Course",
+      "creatorId": 3,
+      "goal": 1500,
+      "deadline": "2025-06-15",
+      "isApproved": true,
+      "description": "Salma, 19 years old, from Alexandria, is aiming to improve her English for university admission.",
+      "image": "https://images.unsplash.com/photo-1588072432836-e10032774350",
+      "rewards": [{ "id": 2, "title": "Handwritten Note", "amount": 15 }]
+    },
+    {
+      "id": 3,
+      "title": "Omar Needs Laptop for Online Class",
+      "creatorId": 4,
+      "goal": 7000,
+      "deadline": "2025-07-10",
+      "isApproved": true,
+      "description": "Omar, 18 years old, from Mansoura, needs a laptop to attend his online university courses.",
+      "image": "https://images.unsplash.com/photo-1602080858428-57174f9431cf?q=80&w=1551&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "rewards": [{ "id": 3, "title": "Social Media Shoutout", "amount": 25 }]
+    },
+    {
+      "id": 4,
+      "title": "Scholarship for Studying Abroad",
+      "creatorId": 5,
+      "goal": 7000,
+      "deadline": "2025-08-05",
+      "isApproved": true,
+      "description": "Mariam, 21 years old, from Aswan, has a partial scholarship and needs support to cover the rest.",
+      "image": "https://images.unsplash.com/photo-1571260899304-425eee4c7efc",
+      "rewards": [
+        { "id": 4, "title": "Personalized Thank You Video", "amount": 50 }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Tuition for Private University",
+      "creatorId": 6,
+      "goal": 10000,
+      "deadline": "2025-09-01",
+      "isApproved": true,
+      "description": "Youssef, 20 years old, needs help covering tuition fees for a private university program in business.",
+      "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7",
+      "rewards": [
+        { "id": 5, "title": "Exclusive Project Update", "amount": 30 }
+      ]
     }
   ],
   "pledges": [
     {
       "id": "1",
-      "amount": 50,
-      "rewardId": 2,
+      "amount": 600,
+      "rewardId": 1,
       "campaignId": 1,
-      "userId": 3
+      "userId": 7
+    },
+    {
+      "id": "2",
+      "amount": 400,
+      "rewardId": 1,
+      "campaignId": 1,
+      "userId": 8
+    },
+    {
+      "id": "3",
+      "amount": 900,
+      "rewardId": 2,
+      "campaignId": 2,
+      "userId": 8
+    },
+    {
+      "id": "4",
+      "amount": 200,
+      "rewardId": 2,
+      "campaignId": 2,
+      "userId": 7
+    },
+    {
+      "id": "5",
+      "amount": 1800,
+      "rewardId": 3,
+      "campaignId": 3,
+      "userId": 8
+    },
+    {
+      "id": "6",
+      "amount": 400,
+      "rewardId": 4,
+      "campaignId": 4,
+      "userId": 6
+    },
+    {
+      "id": "7",
+      "amount": 800,
+      "rewardId": 4,
+      "campaignId": 4,
+      "userId": 7
+    },
+    {
+      "id": "8",
+      "amount": 1000,
+      "rewardId": 5,
+      "campaignId": 5,
+      "userId": 9
+    },
+    {
+      "id": "9",
+      "amount": 500,
+      "rewardId": 5,
+      "campaignId": 5,
+      "userId": 10
     }
   ],
   "updates": [
     {
       "id": "1",
       "campaignId": 1,
-      "content": "We just hit 50% of our funding goal! Thank you!"
+      "content": "Thanks to our early supporters! We're now over halfway there."
+    },
+    {
+      "id": "2",
+      "campaignId": 2,
+      "content": "Salma is overwhelmed by your support! We're now over halfway there."
+    },
+    {
+      "id": "3",
+      "campaignId": 3,
+      "content": "We're getting closer to getting Omar a laptop. Thank you!"
+    },
+    {
+      "id": "4",
+      "campaignId": 4,
+      "content": "Mariam's dream of studying abroad is becoming more real each day!"
+    },
+    {
+      "id": "5",
+      "campaignId": 5,
+      "content": "Youssef thanks you all! Your help is pushing him toward a better future."
     }
   ]
 }
