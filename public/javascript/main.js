@@ -3,15 +3,17 @@ import { Pledge } from "../javascript/models/Pledge.js";
 const allCampaigns = await Campaign.getAllCampaigns();
 const approvedCampaigns = allCampaigns.filter((c) => c.isApproved);
 const allPledges = await Pledge.getAllPledges();
+// console.log(allPledges);
 
 function renderCampaigns() {
   const container = document.querySelector(".cards");
   container.innerHTML = "";
   approvedCampaigns.forEach((campaign) => {
     let id = campaign.id;
-    let relatedPledges = allPledges.filter(
-      (pledge) => pledge.campaignId === id
-    );
+    let relatedPledges = allPledges.filter((pledge) => {
+      return pledge.campaignId == id;
+    });
+    console.log(relatedPledges);
     const totalAmount = relatedPledges.reduce((sum, p) => sum + p.amount, 0);
     const progressPercent = Math.min(
       (totalAmount / campaign.goal) * 100,
