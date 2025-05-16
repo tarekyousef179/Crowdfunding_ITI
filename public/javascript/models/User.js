@@ -22,6 +22,33 @@ export class User {
       console.log(error);
     }
   };
+
+    static register = async function (userData) {
+    try {
+      
+      const users = await User.getAllUsers();
+      const userExists = users.some(u => u.email === userData.email);
+      if (userExists) {
+        return { user: null, errorMessage: "Email already registered." };
+      }
+      
+      const response = await fetch("http://localhost:3000/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        return { user: null, errorMessage: "Failed to register user." };
+      }
+
+      const newUser = await response.json();
+      return { user: newUser, errorMessage: null };
+    } catch (error) {
+      console.error(error);
+      return { user: null, errorMessage: "An error occurred." };
+    }
+  };
   static async approveCampaign(id) {
     await fetch(`http://localhost:3000/campaigns/${id}`, {
       method: "PATCH",
