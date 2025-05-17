@@ -18,6 +18,16 @@ export class User {
       console.log(error);
     }
   };
+  static getUser = async function (id) {
+    try {
+      const response = await fetch("http://localhost:3000/users");
+      const allUsers = await response.json();
+      const user = allUsers.find((u) => u.id == id);
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   static findUserByUsernameAndPassword = async function (_username, _password) {
     try {

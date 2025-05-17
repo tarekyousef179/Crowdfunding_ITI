@@ -125,6 +125,7 @@ const loadPledges = async function () {
 
       const backerTd = document.createElement("td");
       const backer = await User.getUser(pledge.userId);
+      console.log(backer);
       backerTd.textContent = backer.username;
       row.appendChild(pledgeTd);
       row.appendChild(amountTd);

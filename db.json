@@ -15,7 +15,7 @@
       "password": "123456",
       "role": "student",
       "isApproved": true,
-      "isActive": true
+      "isActive": false
     },
     {
       "id": "3",
@@ -86,7 +86,7 @@
   ],
   "campaigns": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Funding for Web Development Scholarship",
       "creatorId": 2,
       "goal": 3000,
@@ -94,10 +94,16 @@
       "isApproved": true,
       "description": "Ahmed, 17 years old, from Cairo, needs funding to join a web development scholarship program.",
       "image": "https://images.unsplash.com/photo-1637855195094-992d3d578f42?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "rewards": [{ "id": 1, "title": "Thank You Email", "amount": 20 }]
+      "rewards": [
+        {
+          "id": 1,
+          "title": "Thank You Email",
+          "amount": 20
+        }
+      ]
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Help Salma Join English Course",
       "creatorId": 3,
       "goal": 1500,
@@ -105,10 +111,16 @@
       "isApproved": true,
       "description": "Salma, 19 years old, from Alexandria, is aiming to improve her English for university admission.",
       "image": "https://images.unsplash.com/photo-1588072432836-e10032774350",
-      "rewards": [{ "id": 2, "title": "Handwritten Note", "amount": 15 }]
+      "rewards": [
+        {
+          "id": 2,
+          "title": "Handwritten Note",
+          "amount": 15
+        }
+      ]
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Omar Needs Laptop for Online Class",
       "creatorId": 4,
       "goal": 7000,
@@ -116,10 +128,16 @@
       "isApproved": true,
       "description": "Omar, 18 years old, from Mansoura, needs a laptop to attend his online university courses.",
       "image": "https://images.unsplash.com/photo-1602080858428-57174f9431cf?q=80&w=1551&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "rewards": [{ "id": 3, "title": "Social Media Shoutout", "amount": 25 }]
+      "rewards": [
+        {
+          "id": 3,
+          "title": "Social Media Shoutout",
+          "amount": 25
+        }
+      ]
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Scholarship for Studying Abroad",
       "creatorId": 5,
       "goal": 7000,
@@ -128,11 +146,15 @@
       "description": "Mariam, 21 years old, from Aswan, has a partial scholarship and needs support to cover the rest.",
       "image": "https://images.unsplash.com/photo-1571260899304-425eee4c7efc",
       "rewards": [
-        { "id": 4, "title": "Personalized Thank You Video", "amount": 50 }
+        {
+          "id": 4,
+          "title": "Personalized Thank You Video",
+          "amount": 50
+        }
       ]
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "Tuition for Private University",
       "creatorId": 6,
       "goal": 10000,
@@ -141,7 +163,11 @@
       "description": "Youssef, 20 years old, needs help covering tuition fees for a private university program in business.",
       "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7",
       "rewards": [
-        { "id": 5, "title": "Exclusive Project Update", "amount": 30 }
+        {
+          "id": 5,
+          "title": "Exclusive Project Update",
+          "amount": 30
+        }
       ]
     }
   ],

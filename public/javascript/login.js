@@ -30,7 +30,7 @@ const onSubmitForm = async (event) => {
     } else if (user.role === "student") {
       window.location.href = "/student-dashboard.html";
     } else {
-      window.location.href = "/admin-dashboard.html";
+      window.location.href = "admin-dashboard.html";
     }
   } else {
     const formErrorField = document.getElementById("formError");
