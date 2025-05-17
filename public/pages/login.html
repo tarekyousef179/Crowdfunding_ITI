@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Crowdfunding</title>
+    <!-- Bootstrap CSS -->
+    <link href="../bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <script src="../javascript/login.js" type="module"></script>
+  </head>
+  <body
+    class="bg-light d-flex justify-content-center align-items-center vh-100"
+  >
+    <div
+      class="card p-4 shadow rounded-4"
+      style="max-width: 500px; width: 100%"
+    >
+      <h2 class="text-center text-primary fw-bold mb-4">Welcome back!</h2>
+
+      <!-- Success Message -->
+      <div id="successMessage" class="alert alert-success text-center d-none">
+        ✅ Logged in successfully!
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" novalidate>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            id="username"
+            class="form-control"
+            placeholder="Please enter username"
+            required
+          />
+          <div class="text-danger mt-1" id="userNameErrorField"></div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder="Please enter password"
+            required
+          />
+          <div class="text-danger mt-1" id="passwordErrorField"></div>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary w-100 rounded-pill fw-semibold"
+          id="login-button"
+        >
+          Continue to sign in
+        </button>
+
+        <div class="text-danger mt-1" id="formError"></div>
+      </form>
+
+      <hr class="my-4" />
+
+      <!-- Register Links -->
+      <div class="text-center">
+        <p class="mb-0">
+          Don't have an account?
+          <a href="#" onclick="alert('Redirect to Admin registration')"
+            >Register as Admin</a
+          >,
+          <a href="#" onclick="alert('Redirect to Teacher registration')"
+            >Teacher</a
+          >
+          or
+          <a href="#" onclick="alert('Redirect to Backer registration')"
+            >Backer</a
+          >
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
+
+>
