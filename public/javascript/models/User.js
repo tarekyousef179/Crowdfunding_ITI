@@ -1,12 +1,17 @@
 export class User {
-  constructor(id, name, email, password, isActive = true, role = "backer") {
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.isActive = isActive;
-    this.role = role;
+  constructor(id, name, email, password, isActive = true, role = "donor") {
+  if (!["donor", "student"].includes(role)) {
+    throw new Error("Invalid role. Role must be either 'donor' or 'student'");
   }
+
+  this.id = id;
+  this.name = name;
+  this.email = email;
+  this.password = password;
+  this.isActive = isActive;
+  this.role = role;
+}
+
 
   static getAllUsers = async function () {
     try {
@@ -17,32 +22,35 @@ export class User {
     }
   };
 
-  static getUser = async function (userId) {
-    try {
-      const response = await fetch("http://localhost:3000/users");
-      const allUsers = await response.json();
-      return allUsers.find(user => user.id == userId);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   static findUserByUsernameAndPassword = async function (_username, _password) {
     try {
       const response = await fetch("http://localhost:3000/users");
       const allUsers = await response.json();
 
-      const foundUser = allUsers.find(
-        ({ username, password }) => username === _username && password === _password
-      );
+      const userByUsername = allUsers.find(user => user.username === _username);
 
-      if (foundUser) {
-        return { user: foundUser };
+      if (!userByUsername) {
+        return {
+          errorCode: "userNotFound",
+          errorMessage: "The username you entered isn't connected to an account. Find your account and log in."
+        };
       }
 
-      return { errorMessage: "User doesn't exist" };
+      if (userByUsername.password !== _password) {
+        return {
+          errorCode: "wrongPassword",
+          errorMessage: "The password that you've entered is incorrect. Forgotten password?"
+        };
+      }
+
+      return { user: userByUsername };
+
     } catch (error) {
       console.log(error);
+      return {
+        errorCode: "serverError",
+        errorMessage: "An unexpected error occurred. Please try again later."
+      };
     }
   };
 
@@ -76,4 +84,5 @@ export class User {
     });
   }
 }
+
 

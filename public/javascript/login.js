@@ -1,39 +1,59 @@
 import { User } from "../javascript/models/User.js";
 
 const onSubmitForm = async (event) => {
-  event.preventDefault(); // prevent actual form submission
-  const userName = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+  event.preventDefault(); 
 
+  
+  document.getElementById("userNameErrorField").innerText = "";
+  document.getElementById("passwordErrorField").innerText = "";
+  document.getElementById("formError").innerText = "";
+
+  const userName = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  
   if (!userName) {
-    const userNameErrorField = document.getElementById("userNameErrorField");
-    userNameErrorField.innerText = "* Required";
+    document.getElementById("userNameErrorField").innerText = "* Required";
     return;
   }
-
   if (!password) {
-    const passwordErrorField = document.getElementById("passwordErrorField");
-    passwordErrorField.innerText = "* Required";
+    document.getElementById("passwordErrorField").innerText = "* Required";
     return;
   }
 
-  const { user, errorMessage } = await User.findUserByUsernameAndPassword(
-    userName,
-    password
-  );
+  
+  const { user, errorCode, errorMessage } = await User.findUserByUsernameAndPassword(userName, password);
 
   if (user) {
-    console.log(user);
-    // window.location.pathname = "/Crowdfunding_ITI/public/pages/home.html";
-    return;
-  }
+    
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
 
-  const formErrorField = document.getElementById("formError");
-  formErrorField.innerText = errorMessage;
+    
+    if (user.role === "donor") {
+      window.location.href = "/pages/donor-dashboard.html";
+    } else if (user.role === "student") {
+      window.location.href = "/pages/student-dashboard.html";
+    } else {
+      window.location.href = "/pages/home.html";
+    }
+  } else {
+    
+    const formErrorField = document.getElementById("formError");
+    if (errorCode === "userNotFound") {
+      formErrorField.innerText = errorMessage;
+    } else if (errorCode === "wrongPassword") {
+      formErrorField.innerHTML = errorMessage;
+    } else {
+      formErrorField.innerText = errorMessage || "An unknown error occurred.";
+    }
+  }
 };
 
-// Register the event listener when the page loads
+
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
   loginForm.addEventListener("submit", onSubmitForm);
 });
+
+
+

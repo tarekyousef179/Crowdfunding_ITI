@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": 1,
       "username": "admin",
       "email": "han@admin.com",
       "password": "admin123",
@@ -9,53 +9,32 @@
       "isActive": true
     },
     {
-      "id": "2",
-      "username": "campaigner1",
-      "email": "hdbb@exam.com",
+      "id": 2,
+      "username": "student1",
       "password": "123456",
-      "role": "campaigner",
-      "isApproved": true,
+      "role": "student",
       "isActive": true
     },
     {
-      "id": "3",
-      "username": "campaigner1",
-      "email": "han@google.com",
-      "password": "123456",
-      "role": "campaigner",
-      "isApproved": true,
-      "isActive": true
-    },
-    {
-      "id": "4",
-      "username": "campaigner1",
-      "email": "jdchj@mojh.com",
-      "password": "123456",
-      "role": "campaigner",
-      "isApproved": true,
-      "isActive": true
-    },
-    {
-      "id": "5",
-      "username": "backer1",
-      "email": "jxbb@mjh.com",
-      "password": "123456",
-      "role": "backer",
+      "id": 3,
+      "username": "donor1",
+      "password": "abc123",
+      "role": "donor",
       "isActive": true
     }
   ],
   "campaigns": [
     {
-      "id": "1",
-      "title": "buliding website",
+      "id": 1,
+      "title": "building website",
       "description": "Help me build a website",
-      "goal": "5000",
-      "ownerId": 2,
+      "goal": 5000,
+      "ownerId": 3,
       "isApproved": true,
       "rewards": [
         {
           "id": 1,
-          "title": "Earle Bird",
+          "title": "Early Bird",
           "amount": 50
         }
       ]
@@ -63,7 +42,7 @@
   ],
   "pledges": [
     {
-      "id": "1",
+      "id": 1,
       "amount": 50,
       "rewardId": 2,
       "campaignId": 1,
@@ -72,7 +51,7 @@
   ],
   "updates": [
     {
-      "id": "1",
+      "id": 1,
       "campaignId": 1,
       "content": "We just hit 50% of our funding goal! Thank you!"
     }
