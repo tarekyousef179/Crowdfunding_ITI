@@ -1,18 +1,15 @@
 export class User {
   constructor(id, name, email, password, isActive = true, role = "donor") {
-  if (!["donor", "student"].includes(role)) {
-    throw new Error("Invalid role. Role must be either 'donor' or 'student'");
+    if (!["donor", "student"].includes(role)) {
+      throw new Error("Invalid role. Role must be either 'donor' or 'student'");
+    }
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.isActive = isActive;
+    this.role = role;
   }
-
-  this.id = id;
-  this.name = name;
-  this.email = email;
-  this.password = password;
-  this.isActive = isActive;
-  this.role = role;
-}
-
-
   static getAllUsers = async function () {
     try {
       const response = await fetch("http://localhost:3000/users");
@@ -27,29 +24,32 @@ export class User {
       const response = await fetch("http://localhost:3000/users");
       const allUsers = await response.json();
 
-      const userByUsername = allUsers.find(user => user.username === _username);
+      const userByUsername = allUsers.find(
+        (user) => user.username === _username
+      );
 
       if (!userByUsername) {
         return {
           errorCode: "userNotFound",
-          errorMessage: "The username you entered isn't connected to an account. Find your account and log in."
+          errorMessage:
+            "The username you entered isn't connected to an account. Find your account and log in.",
         };
       }
 
       if (userByUsername.password !== _password) {
         return {
           errorCode: "wrongPassword",
-          errorMessage: "The password that you've entered is incorrect. Forgotten password?"
+          errorMessage:
+            "The password that you've entered is incorrect. Forgotten password?",
         };
       }
 
       return { user: userByUsername };
-
     } catch (error) {
       console.log(error);
       return {
         errorCode: "serverError",
-        errorMessage: "An unexpected error occurred. Please try again later."
+        errorMessage: "An unexpected error occurred. Please try again later.",
       };
     }
   };
@@ -84,5 +84,3 @@ export class User {
     });
   }
 }
-
-
