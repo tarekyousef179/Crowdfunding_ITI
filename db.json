@@ -21,7 +21,7 @@
       "username": "salma",
       "email": "salma@gmail.com",
       "password": "123456",
-      "role": "campaigner",
+      "role": "student",
       "isApproved": true,
       "isActive": true
     },
@@ -30,7 +30,7 @@
       "username": "omar",
       "email": "omar@gmail.com",
       "password": "123456",
-      "role": "campaigner",
+      "role": "student",
       "isApproved": true,
       "isActive": true
     },
@@ -39,7 +39,7 @@
       "username": "marieum",
       "email": "Mariam@gmail.com",
       "password": "123456",
-      "role": "campaigner",
+      "role": "student",
       "isActive": true
     },
     {
@@ -47,7 +47,7 @@
       "username": "Youssef",
       "email": "Youssef@gmail.com",
       "password": "123456",
-      "role": "campaigner",
+      "role": "student",
       "isActive": true
     },
     {
@@ -55,7 +55,7 @@
       "username": "elsayed",
       "email": "elsayed@gmail.com",
       "password": "123456",
-      "role": "backer",
+      "role": "donor",
       "isActive": true
     },
     {
@@ -63,7 +63,7 @@
       "username": "gamal",
       "email": "gamal@gmail.com",
       "password": "123456",
-      "role": "backer",
+      "role": "donor",
       "isActive": true
     },
     {
@@ -71,7 +71,7 @@
       "username": "hassan",
       "email": "hassan@gmail.com",
       "password": "123456",
-      "role": "backer",
+      "role": "donor",
       "isActive": true
     },
     {
@@ -79,7 +79,7 @@
       "username": "mostafa",
       "email": "mostafa@gmail.com",
       "password": "123456",
-      "role": "backer",
+      "role": "donor",
       "isActive": true
     }
   ],
