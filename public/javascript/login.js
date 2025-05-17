@@ -28,7 +28,7 @@ const onSubmitForm = async (event) => {
     if (user.role === "donor") {
       window.location.href = "/donor-dashboard.html";
     } else if (user.role === "student") {
-      window.location.href = "/student-dashboard.html";
+      window.location.href = "student.html";
     } else {
       window.location.href = "admin-dashboard.html";
     }

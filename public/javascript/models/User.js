@@ -93,4 +93,14 @@ export class User {
       body: JSON.stringify({ isActive: !currentStatus }),
     });
   }
+
+  static findRequestByUserId = async function (userId) {
+    try {
+      const response = await fetch("http://localhost:3000/requests");
+      const allRequests = await response.json();
+      return allRequests.filter(({ studentId }) => studentId === userId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }

@@ -1,24 +1,111 @@
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+import { User } from './models/User.js'
+
+const currentUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
 if (!currentUser || currentUser.role !== "student") {
   window.location.href = "login.html";
-  return
 }
 
+  const getRequests = () => JSON.parse(localStorage.getItem("studentRequests") || "[]")
+
+  const saveRequests = (requests) => localStorage.setItem("studentRequests", JSON.stringify(requests || []))
+
+  const getTotalSum = (dataArray) => dataArray.reduce((acc, { amount }) => acc + amount,0)
+
+
+  const convertImageToBase64 = (inputElement) => {
+  return new Promise((resolve, reject) => {
+    const file = inputElement.files[0];
+    if (!file) {
+      return reject("No file selected");
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      resolve(reader.result); // Base64 string
+    };
+
+    reader.onerror = (error) => {
+      reject("Error reading file: " + error);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+// const requestImageInput = document.getElementById("")
+// const requestBase64 = await convertImageToBase64(requestImageInput)
+
+// const newRequestData = {
+//       "id": Date.now(),
+//       "requestType": "",
+//       "date": "",
+//       "status": "Under Review",
+//       "description": "", 
+//       requestBase64,
+//       "amount": ,
+//       "studentId": id
+// }
+
+
+  const  renderRequests = async (userId) => {
+    const requests = await User.findRequestByUserId(userId);
+
+    const mainContent = document.getElementById("main-content");
+
+
+    if(!requests.length){
+      mainContent.innerHTML = `
+      <h3>My Requests</h3>
+      <h2>You havn't any request yet .</h3>
+      `;
+      return;
+    }
+
+    const rows = requests.map(({ requestType, date, status, description, amount }) => `
+      <tr>
+        <td>${requestType}</td>
+        <td>${date}</td>
+        <td><span class="badge ${status === 'Approved' ? 'bg-success' : status === 'Rejected' ? 'bg-danger' : 'bg-warning text-dark'}">${status}</span></td>
+        <td>${description}</td>
+        <td>$${amount}</td>
+      </tr>
+    `).join("");
+
+    mainContent.innerHTML = `
+      <h3>My Requests</h3>
+        <div class="table-responsive mt-4">
+          <table class="table table-hover bg-white mt-3 rounded-3 shadow-sm">
+            <thead class="table-light">
+              <tr>
+                <th>Request</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      <div class="mt-3">
+        <h6>Total Approved Funding: <strong>${getTotalSum(requests)}</strong></h6>
+      </div>
+    `;
+  }
+
 document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("studentName").textContent = currentUser.name;
+  const { username, id } = currentUser;
+
+
+  document.getElementById("studentName").textContent = username;
 
   const mainContent = document.getElementById("main-content");
   const navLinks = document.querySelectorAll(".nav-link");
   const badgeRequests = document.getElementById("badgeRequests");
 
-  function getRequests() {
-    return JSON.parse(localStorage.getItem("studentRequests") || "[]");
-  }
 
-  function saveRequests(requests) {
-    localStorage.setItem("studentRequests", JSON.stringify(requests));
-  }
 
   function updateBadge() {
     const count = getRequests().length;
@@ -27,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function renderHome() {
     mainContent.innerHTML = `
-      <h3>Welcome, ${currentUser.name}!</h3>
+      <h3>Welcome, ${username}!</h3>
       <h5 class="mb-3">Your Funded Requests</h5>
       <div class="row g-4">
         <div class="col-md-6 col-lg-4">
@@ -67,43 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
   }
 
-  function renderRequests() {
-    const requests = getRequests();
-    if(requests.length === 0){
-      mainContent.innerHTML = `
-        <h3>My Requests</h3>
-        <p class="text-muted mt-3">No requests submitted yet.</p>
-      `;
-      return;
-    }
-
-    let rows = requests.map(r => `
-      <tr>
-        <td>${r.type}</td>
-        <td>${r.date}</td>
-        <td><span class="badge ${r.status === 'Approved' ? 'bg-success' : r.status === 'Rejected' ? 'bg-danger' : 'bg-warning text-dark'}">${r.status}</span></td>
-        <td>${r.description}</td>
-        <td>$${r.amount}</td>
-      </tr>
-    `).join("");
-
-    mainContent.innerHTML = `
-      <h3>My Requests</h3>
-      <table class="table table-hover bg-white mt-3 rounded-3 shadow-sm">
-        <thead class="table-light">
-          <tr>
-            <th>Request</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Description</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    `;
-  }
-
   function renderNewRequest() {
     mainContent.innerHTML = `
       <h3>Submit a New Request</h3>
@@ -111,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="requestName" class="form-label">Name</label>
-            <input type="text" id="requestName" class="form-control" value="${currentUser.name}" readonly />
+            <input type="text" id="requestName" class="form-control" value="${username}" readonly />
           </div>
           <div class="col-md-6">
             <label for="requestAge" class="form-label">Age</label>
@@ -170,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function () {
       updateBadge();
       alert("Request submitted successfully!");
       setActiveNav("requests");
-      renderRequests();
+      renderRequests(id);
     });
   }
 
@@ -181,16 +231,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   navLinks.forEach(link => {
-    link.addEventListener("click", e => {
+    link.addEventListener("click", async (e) => {
       e.preventDefault();
       const section = link.dataset.section;
       setActiveNav(section);
-      if(section === "home") renderHome();
-      else if(section === "requests") renderRequests();
-      else if(section === "new") renderNewRequest();
+      if(section === "home") {
+        renderHome()
+      } else if(section === "requests") {
+        await renderRequests(id)
+      }else if(section === "new") {
+        renderNewRequest()
+      };
     });
   });
 
   updateBadge();
   renderHome();
 });
+
+        

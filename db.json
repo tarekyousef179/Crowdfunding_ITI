@@ -262,5 +262,43 @@
       "campaignId": 5,
       "content": "Youssef thanks you all! Your help is pushing him toward a better future."
     }
+  ],
+  "requests": [
+    {
+      "id": "1",
+      "requestType": "Scholarship",
+      "date": "2024-04-15",
+      "status": "Under Review",
+      "description": "Funding for university tuition fees",
+      "amount": 1000,
+      "studentId": "2"
+    },
+    {
+      "id": "2",
+      "requestType": "Course",
+      "date": "2024-03-20",
+      "status": "Approved",
+      "description": "Python programming course",
+      "amount": 300,
+      "studentId": "3"
+    },
+    {
+      "id": "3",
+      "requestType": "Supplies",
+      "date": "2024-01-10",
+      "status": "Rejected",
+      "description": "Request for school supplies",
+      "amount": 150,
+      "studentId": "2"
+    },
+    {
+      "id": "4",
+      "requestType": "Internal Scholarship",
+      "date": "2024-01-18",
+      "status": "Approved",
+      "description": "Funding for university tuition fees",
+      "amount": 200,
+      "studentId": "2"
+    }
   ]
 }
