@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": 1,
       "username": "admin",
       "email": "admin@admin.com",
       "password": "admin123",
@@ -13,8 +13,7 @@
       "username": "Ahmed",
       "email": "ahmed@gmail.com",
       "password": "123456",
-      "role": "campaigner",
-      "isApproved": true,
+      "role": "student",
       "isActive": true
     },
     {
@@ -212,7 +211,7 @@
   ],
   "updates": [
     {
-      "id": "1",
+      "id": 1,
       "campaignId": 1,
       "content": "Thanks to our early supporters! We're now over halfway there."
     },
