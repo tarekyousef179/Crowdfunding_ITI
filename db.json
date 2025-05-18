@@ -6,7 +6,7 @@
       "email": "admin@admin.com",
       "password": "admin123",
       "role": "admin",
-      "isActive": true
+      "isActive": false
     },
     {
       "id": "2",
@@ -15,7 +15,7 @@
       "password": "123456",
       "role": "student",
       "isApproved": true,
-      "isActive": false
+      "isActive": true
     },
     {
       "id": "3",
@@ -41,7 +41,7 @@
       "email": "Mariam@gmail.com",
       "password": "123456",
       "role": "student",
-      "isActive": true
+      "isActive": false
     },
     {
       "id": "6",
@@ -65,7 +65,7 @@
       "email": "gamal@gmail.com",
       "password": "123456",
       "role": "donor",
-      "isActive": true
+      "isActive": false
     },
     {
       "id": "9",
