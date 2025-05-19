@@ -1,7 +1,7 @@
 import { Campaign } from "../javascript/models/campaign.js";
 import { Pledge } from "../javascript/models/Pledge.js";
 import { renderCampaigns } from "./main.js";
-import { user } from "./helpers.js";
+import { user } from "./helpers/helpers.js";
 const allCampaigns = await Campaign.getAllCampaigns();
 const approvedCampaigns = allCampaigns.filter((c) => c.isApproved);
 const allPledges = await Pledge.getAllPledges();

@@ -28,6 +28,17 @@ export class User {
       console.log(error);
     }
   };
+  static updateUserInDatabase = async function (updatedUser) {
+    try {
+      await fetch(`http://localhost:3000/users/${updatedUser.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedUser),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   static findUserByUsernameAndPassword = async function (_username, _password) {
     try {
