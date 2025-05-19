@@ -1,4 +1,4 @@
-import { User } from './models/User.js'
+import { User } from "../javascript/models/User.js";
 
 const currentUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
@@ -6,14 +6,14 @@ if (!currentUser || currentUser.role !== "student") {
   window.location.href = "login.html";
 }
 
-  const getRequests = () => JSON.parse(localStorage.getItem("studentRequests") || "[]")
+const getTotalSum = (requests) => requests.reduce((acc, { amount }) => acc + Number(amount), 0);
 
-  const saveRequests = (requests) => localStorage.setItem("studentRequests", JSON.stringify(requests || []))
+const calculateApprovedRequests = (requests) => {
+  const approvedRequests = requests.filter(({ status }) => status === "Approved");
+  return getTotalSum(approvedRequests);
+};
 
-  const getTotalSum = (dataArray) => dataArray.reduce((acc, { amount }) => acc + amount,0)
-
-
-  const convertImageToBase64 = (inputElement) => {
+const convertImageToBase64 = (inputElement) => {
   return new Promise((resolve, reject) => {
     const file = inputElement.files[0];
     if (!file) {
@@ -21,83 +21,58 @@ if (!currentUser || currentUser.role !== "student") {
     }
 
     const reader = new FileReader();
-
-    reader.onload = () => {
-      resolve(reader.result); // Base64 string
-    };
-
-    reader.onerror = (error) => {
-      reject("Error reading file: " + error);
-    };
-
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject("Error reading file: " + error);
     reader.readAsDataURL(file);
   });
-}
+};
 
-// const requestImageInput = document.getElementById("")
-// const requestBase64 = await convertImageToBase64(requestImageInput)
+const renderRequests = async (userId) => {
+  const requests = await User.findRequestByUserId(userId);
+  const mainContent = document.getElementById("main-content");
 
-// const newRequestData = {
-//       "id": Date.now(),
-//       "requestType": "",
-//       "date": "",
-//       "status": "Under Review",
-//       "description": "", 
-//       requestBase64,
-//       "amount": ,
-//       "studentId": id
-// }
-
-
-  const  renderRequests = async (userId) => {
-    const requests = await User.findRequestByUserId(userId);
-
-    const mainContent = document.getElementById("main-content");
-
-
-    if(!requests.length){
-      mainContent.innerHTML = `
-      <h3>My Requests</h3>
-      <h2>You havn't any request yet .</h3>
-      `;
-      return;
-    }
-
-    const rows = requests.map(({ requestType, date, status, description, amount }) => `
-      <tr>
-        <td>${requestType}</td>
-        <td>${date}</td>
-        <td><span class="badge ${status === 'Approved' ? 'bg-success' : status === 'Rejected' ? 'bg-danger' : 'bg-warning text-dark'}">${status}</span></td>
-        <td>${description}</td>
-        <td>$${amount}</td>
-      </tr>
-    `).join("");
-
+  if (!requests.length) {
     mainContent.innerHTML = `
-      <h3>My Requests</h3>
-        <div class="table-responsive mt-4">
-          <table class="table table-hover bg-white mt-3 rounded-3 shadow-sm">
-            <thead class="table-light">
-              <tr>
-                <th>Request</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Description</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>
-      <div class="mt-3">
-        <h6>Total Approved Funding: <strong>${getTotalSum(requests)}</strong></h6>
-      </div>
+      <h3>My Campaigns</h3>
+      <p>You haven't any request yet.</p>
     `;
+    return;
   }
+
+  const rows = requests.map(({ requestType, date, status, description, amount }) => `
+    <tr>
+      <td>${requestType}</td>
+      <td>${date}</td>
+      <td><span class="badge ${status === 'Approved' ? 'bg-success' : status === 'Rejected' ? 'bg-danger' : 'bg-warning text-dark'}">${status}</span></td>
+      <td>${description}</td>
+      <td>$${amount}</td>
+    </tr>
+  `).join("");
+
+  mainContent.innerHTML = `
+    <h3>My Campaigns</h3>
+    <div class="table-responsive mt-4">
+      <table class="table table-hover bg-white mt-3 rounded-3 shadow-sm">
+        <thead class="table-light">
+          <tr>
+            <th>Request</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <div class="mt-3">
+      <h6>Total Approved Funding: <strong>$${calculateApprovedRequests(requests)}</strong></h6>
+    </div>
+  `;
+};
 
 document.addEventListener("DOMContentLoaded", function () {
   const { username, id } = currentUser;
-
 
   document.getElementById("studentName").textContent = username;
 
@@ -105,124 +80,197 @@ document.addEventListener("DOMContentLoaded", function () {
   const navLinks = document.querySelectorAll(".nav-link");
   const badgeRequests = document.getElementById("badgeRequests");
 
-
-
-  function updateBadge() {
-    const count = getRequests().length;
-    badgeRequests.textContent = count > 0 ? count : "";
+  async function updateBadge() {
+    try {
+      const res = await fetch(`http://localhost:3000/requests?studentId=${currentUser.id}`);
+      const data = await res.json();
+      badgeRequests.textContent = data.length > 0 ? data.length : "";
+    } catch {
+      badgeRequests.textContent = "";
+    }
   }
 
-  function renderHome() {
-    mainContent.innerHTML = `
-      <h3>Welcome, ${username}!</h3>
-      <h5 class="mb-3">Your Funded Requests</h5>
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4">
+  async function renderHome() {
+    mainContent.innerHTML = `<h3>Welcome, ${username}</h3>
+      <h5 class="mb-3">Your Funded Campaigns</h5>
+      <div class="row g-4" id="funded-cards"></div>`;
+
+    try {
+      const response = await fetch(`http://localhost:3000/fundedRequests?studentId=${id}`);
+      const fundedRequests = await response.json();
+      const container = document.getElementById('funded-cards');
+
+      if (fundedRequests.length === 0) {
+        container.innerHTML = `<p>No funded requests yet.</p>`;
+        return;
+      }
+
+      fundedRequests.forEach(req => {
+        const card = document.createElement('div');
+        card.className = 'col-md-6 col-lg-4';
+        card.innerHTML = `
           <div class="card shadow-lg rounded-3">
-            <img src="https://via.placeholder.com/300x150?text=Scholarship" class="card-img-top" alt="Scholarship">
+            <img src="${req.image}" class="card-img-top" alt="${req.type}">
             <div class="card-body">
-              <h5>Scholarship</h5>
-              <p>Received funding for tuition fees.</p>
-              <strong>$1,000</strong><br>
-              <small>04/15/2024</small>
+              <h5>${req.type}</h5>
+              <p>${req.description}</p>
+              <strong>$${req.amount}</strong><br>
+              <small>${new Date(req.date).toLocaleDateString()}</small>
             </div>
           </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card shadow-lg rounded-3">
-            <img src="https://via.placeholder.com/300x150?text=Course" class="card-img-top" alt="Course">
-            <div class="card-body">
-              <h5>Course</h5>
-              <p>Python programming course.</p>
-              <strong>$300</strong><br>
-              <small>03/20/2024</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card shadow-lg rounded-3">
-            <img src="https://via.placeholder.com/300x150?text=Supplies" class="card-img-top" alt="Supplies">
-            <div class="card-body">
-              <h5>Supplies</h5>
-              <p>Received funds for school supplies.</p>
-              <strong>$150</strong><br>
-              <small>01/10/2024</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
+        `;
+        container.appendChild(card);
+      });
+    } catch (error) {
+      console.error('Error loading funded requests:', error);
+      document.getElementById('funded-cards').innerHTML = `<p class="text-danger">Error loading data.</p>`;
+    }
   }
 
   function renderNewRequest() {
-    mainContent.innerHTML = `
-      <h3>Submit a New Request</h3>
-      <form id="newRequestForm" class="mt-4">
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="requestName" class="form-label">Name</label>
-            <input type="text" id="requestName" class="form-control" value="${username}" readonly />
-          </div>
-          <div class="col-md-6">
-            <label for="requestAge" class="form-label">Age</label>
-            <input type="number" id="requestAge" class="form-control" placeholder="Enter your age" required />
-          </div>
+  mainContent.innerHTML = `
+    <h3>Submit a New campaign</h3>
+    <form id="newRequestForm" class="mt-4 needs-validation" novalidate>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="campaignType" class="form-label">Type of Request</label>
+          <select id="campaignType" class="form-select" required>
+            <option value="" disabled selected>Select type</option>
+            <option value="Scholarship">Study abroad</option>
+            <option value="Course">Course</option>
+            <option value="Supplies">learning Equipment</option>
+            <option value="Supplies">university tuition</option>
+          </select>
+          <div class="invalid-feedback">Please select a request type.</div>
         </div>
-
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="requestType" class="form-label">Type of Request</label>
-            <select id="requestType" class="form-select" required>
-              <option value="" disabled selected>Select type</option>
-              <option value="Scholarship">Scholarship</option>
-              <option value="Course">Course</option>
-              <option value="Supplies">Supplies</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label for="requestVideo" class="form-label">Upload a Video</label>
-            <input type="file" id="requestVideo" class="form-control" accept="video/*" />
-          </div>
+        <div class="col-md-6">
+          <label for="campaignImage" class="form-label">Upload an Image</label>
+          <input type="file" id="campaignImage" class="form-control" accept="image/*" required />
+          <div class="invalid-feedback">Please upload an image.</div>
         </div>
+      </div>
 
-        <div class="mb-3">
-          <label for="requestReason" class="form-label">Why do you need this request?</label>
-          <textarea id="requestReason" class="form-control" rows="3" required></textarea>
+      <div class="mb-3">
+        <label for="requestReason" class="form-label">Why do you need this request?</label>
+        <textarea id="requestReason" class="form-control" rows="3" required></textarea>
+        <div class="invalid-feedback">Please provide a description.</div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="campaignDeadline" class="form-label">Deadline</label>
+          <input type="date" id="campaignDeadline" class="form-control" required />
+          <div class="invalid-feedback">Please set a deadline.</div>
         </div>
-
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="requestDeadline" class="form-label">Deadline</label>
-            <input type="date" id="requestDeadline" class="form-control" required />
-          </div>
-          <div class="col-md-6">
-            <label for="requestAmount" class="form-label">Amount Needed ($)</label>
-            <input type="number" id="requestAmount" class="form-control" min="1" required />
-          </div>
+        <div class="col-md-6">
+          <label for="campaignAmount" class="form-label">GOAL ($)</label>
+          <input type="number" id="campaignAmount" class="form-control" min="1" required />
+          <div class="invalid-feedback">Please enter a valid amount.</div>
         </div>
+      </div>
 
-        <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-send"></i> Submit Request</button>
-      </form>
-    `;
+      <div class="mt-3 d-flex gap-2">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> Submit Request</button>
+        <button type="button" id="cancelRequestBtn" class="btn btn-secondary">Cancel Request</button>
+      </div>
+    </form>
+  `;
 
-    document.getElementById("newRequestForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const newRequest = {
-        type: document.getElementById("requestType").value,
-        date: new Date().toLocaleDateString(),
-        status: "Pending",
-        description: document.getElementById("requestReason").value,
-        amount: parseFloat(document.getElementById("requestAmount").value).toFixed(2),
-      };
-      const requests = getRequests();
-      requests.push(newRequest);
-      saveRequests(requests);
-      updateBadge();
-      alert("Request submitted successfully!");
+  const form = document.getElementById("newRequestForm");
+
+  // 1. Load saved data from localStorage if available
+  const savedFormData = JSON.parse(localStorage.getItem("newRequestData")) || {};
+
+  document.getElementById("campaignType").value = savedFormData.requestType || "";
+  document.getElementById("requestReason").value = savedFormData.description || "";
+  document.getElementById("campaignDeadline").value = savedFormData.deadline || "";
+  document.getElementById("campaignAmount").value = savedFormData.amount || "";
+
+  
+  const updateLocalStorage = () => {
+    const data = {
+      requestType: document.getElementById("campaignType").value,
+      description: document.getElementById("requestReason").value,
+      deadline: document.getElementById("campaignDeadline").value,
+      amount: document.getElementById("campaignAmount").value,
+    };
+    localStorage.setItem("newRequestData", JSON.stringify(data));
+  };
+
+  ["campaignType", "requestReason", "campaignDeadline", "campaignAmount"].forEach((id) => {
+    document.getElementById(id).addEventListener("input", updateLocalStorage);
+  });
+
+  
+  const cancelBtn = document.getElementById("cancelRequestBtn");
+  cancelBtn.addEventListener("click", () => {
+    form.reset();
+    form.classList.remove("was-validated");
+    localStorage.removeItem("newRequestData");
+  });
+
+  
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    form.classList.add("was-validated");
+    if (!form.checkValidity()) return;
+
+    const imageInput = document.getElementById("campaignImage");
+    let base64Image = "";
+
+    try {
+      base64Image = await convertImageToBase64(imageInput);
+    } catch (err) {
+      imageInput.classList.add("is-invalid");
+      return;
+    }
+
+    const newRequest = {
+      requestType: document.getElementById("campaignType").value,
+      date: new Date().toLocaleDateString(),
+      status: "Pending",
+      description: document.getElementById("requestReason").value,
+      amount: parseFloat(document.getElementById("campaignAmount").value).toFixed(2),
+      image: base64Image,
+      studentId: currentUser.id,
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newRequest),
+      });
+
+      if (!response.ok) throw new Error("Failed to save request");
+
+      
+      localStorage.removeItem("newRequestData");
+      await updateBadge();
       setActiveNav("requests");
-      renderRequests(id);
-    });
-  }
+
+      const tableBody = document.querySelector("tbody");
+      if (tableBody) {
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+          <td>${newRequest.requestType}</td>
+          <td>${newRequest.date}</td>
+          <td><span class="badge bg-warning text-dark">Pending</span></td>
+          <td>${newRequest.description}</td>
+          <td>$${newRequest.amount}</td>
+        `;
+        tableBody.appendChild(newRow);
+      } else {
+        await renderRequests(currentUser.id);
+      }
+
+    } catch (error) {
+      console.error("Error saving request:", error);
+      alert("Failed to submit request. Please try again.");
+    }
+  });
+}
+
 
   function setActiveNav(section) {
     navLinks.forEach(link => {
@@ -235,18 +283,27 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       const section = link.dataset.section;
       setActiveNav(section);
-      if(section === "home") {
-        renderHome()
-      } else if(section === "requests") {
-        await renderRequests(id)
-      }else if(section === "new") {
-        renderNewRequest()
-      };
+      if (section === "home") {
+        renderHome();
+      } else if (section === "requests") {
+        await renderRequests(id);
+      } else if (section === "new") {
+        renderNewRequest();
+      }
     });
+  });
+
+  
+  const logoutLink = document.querySelector('.nav-link.text-danger');
+  logoutLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "login.html";
   });
 
   updateBadge();
   renderHome();
 });
+
 
         
