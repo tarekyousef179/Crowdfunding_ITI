@@ -26,9 +26,9 @@ const onSubmitForm = async (event) => {
     localStorage.setItem("loggedInUser", JSON.stringify(user));
 
     if (user.role === "donor") {
-      window.location.href = "/donor-dashboard.html";
+      window.location.href = "donor-dashboard.html";
     } else if (user.role === "student") {
-      window.location.href = "/student-dashboard.html";
+      window.location.href = "student-dashboard.html";
     } else {
       window.location.href = "admin-dashboard.html";
     }

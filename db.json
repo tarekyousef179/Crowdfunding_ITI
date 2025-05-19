@@ -87,12 +87,13 @@
   "campaigns": [
     {
       "id": "1",
-      "title": "Funding for Web Development Scholarship",
+      "title": "Funding for Web Development Course",
       "creatorId": 2,
       "goal": 3000,
       "deadline": "2025-07-01",
       "isApproved": true,
-      "description": "Ahmed, 17 years old, from Cairo, needs funding to join a web development scholarship program.",
+      "category": "courses",
+      "description": "Ahmed, 17 years old, from Cairo, needs funding to join a web development Course program.",
       "image": "https://images.unsplash.com/photo-1637855195094-992d3d578f42?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "rewards": [
         {
@@ -109,6 +110,7 @@
       "goal": 1500,
       "deadline": "2025-06-15",
       "isApproved": true,
+      "category": "courses",
       "description": "Salma, 19 years old, from Alexandria, is aiming to improve her English for university admission.",
       "image": "https://images.unsplash.com/photo-1588072432836-e10032774350",
       "rewards": [
@@ -126,6 +128,7 @@
       "goal": 7000,
       "deadline": "2025-07-10",
       "isApproved": true,
+      "category": "learning equipment",
       "description": "Omar, 18 years old, from Mansoura, needs a laptop to attend his online university courses.",
       "image": "https://images.unsplash.com/photo-1602080858428-57174f9431cf?q=80&w=1551&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "rewards": [
@@ -143,6 +146,7 @@
       "goal": 7000,
       "deadline": "2025-08-05",
       "isApproved": true,
+      "category": "study abroad",
       "description": "Mariam, 21 years old, from Aswan, has a partial scholarship and needs support to cover the rest.",
       "image": "https://images.unsplash.com/photo-1571260899304-425eee4c7efc",
       "rewards": [
@@ -160,6 +164,7 @@
       "goal": 10000,
       "deadline": "2025-09-01",
       "isApproved": true,
+      "category": "university tuition",
       "description": "Youssef, 20 years old, needs help covering tuition fees for a private university program in business.",
       "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7",
       "rewards": [
@@ -212,7 +217,7 @@
       "amount": 400,
       "rewardId": 4,
       "campaignId": 4,
-      "userId": 6
+      "userId": 10
     },
     {
       "id": "7",

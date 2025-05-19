@@ -12,7 +12,8 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <script src="./javascript/main.js" type="module"></script>
   </head>
   <body>
     <header>
@@ -20,10 +21,9 @@
         <div class="logo">Scholarship & Course <br />Support</div>
         <i class="fas fa-bars toggle-menu"></i>
         <nav>
-          <a href="#">Home</a>
-          <a href="#">Opportunities</a>
+          <a href="index.html">Home</a>
           <a href="#">About</a>
-          <a href="#">Register</a>
+          <a href="pages\signup.html">Register</a>
           <a href="pages\login.html">Login</a>
         </nav>
       </div>
@@ -31,20 +31,43 @@
     <section class="hero">
       <div class="container">
         <div class="hero-text">
-          <h1>
-            Empower a Student's Future<br />
-            Support Scholarships or Courses
-          </h1>
+          <h1>Help Students Reach Their Goals</br>"Your Donation, Their Tomorrow"</h1>
           <div class="hero-buttons">
-            <a href="#" class="btn-primary">Apply for Support</a>
-            <a href="#" class="btn-outline">View Opportunities</a>
+            <a href="pages\login.html" class="btn-primary">Apply for Support</a>
+            <a href="pages\signup.html" class="btn-primary">Become a Donor</a>
           </div>
         </div>
       </div>
     </section>
-    <section class="projects">
+    <section class="projects" category-filter>
       <div class="container">
         <h2>Students Seeking Funding</h2>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <select class="form-select" id="category-filter">
+              <option value="all">All</option>
+              <option value="courses">Courses</option>
+              <option value="learning equipment">Learning Equipment</option>
+              <option value="study abroad">Study Abroad</option>
+              <option value="university tuition">University Tuition</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select class="form-select" id="deadline-filter">
+              <option value="">Deadline</option>
+              <option value="asc">Earliest First</option>
+              <option value="desc">Latest First</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              id="keyword-filter"
+              placeholder="search"
+            />
+          </div>
+        </div>
         <div class="cards"></div>
       </div>
     </section>
@@ -65,8 +88,8 @@
 
     <section class="cta">
       <h2>Join the Movement</h2>
-      <a href="#" class="btn-primary">Become a Donor</a>
-      <a href="#" class="btn-outline">Request Support</a>
+      <a href="pages/signup.html" class="btn-primary">Become a Donor</a>
+      <a href="pages/login.html" class="btn-outline">Request Support</a>
     </section>
 
     <footer>
@@ -82,6 +105,6 @@
         <a href="#">Instagram</a>
       </p>
     </footer>
-    <script src="./javascript/main.js" type="module"></script>
+    <script src="bootstrap/bootstrap.bundle.min.js"></script>
   </body>
 </html>

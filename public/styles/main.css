@@ -112,6 +112,7 @@ nav a:hover {
   font-weight: bold;
   text-align: center;
   color: white;
+  line-height: 1.5;
 }
 @media (max-width: 768px) {
   .hero .container {
@@ -120,6 +121,9 @@ nav a:hover {
   .hero-text h1 {
     font-size: 35px;
   }
+}
+.hero-buttons {
+  text-align: center;
 }
 .hero-buttons a {
   padding: 12px 24px;
@@ -156,7 +160,7 @@ nav a:hover {
 }
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
   max-height: 100vh;
   overflow-y: auto;
@@ -177,6 +181,10 @@ nav a:hover {
 .card h3 {
   margin: 10px;
   font-size: 18px;
+}
+.card p span {
+  font-size: 18px;
+  color: #333;
 }
 .card p {
   margin: 0 10px 10px;

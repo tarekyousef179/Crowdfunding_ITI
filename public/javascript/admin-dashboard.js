@@ -139,7 +139,6 @@ const loadPledges = async function () {
 loadPledges();
 const showSection = function (sectionId) {
   const allSections = document.querySelectorAll(".dashboard-item");
-  console.log(allSections);
   allSections.forEach((sec) => (sec.style.display = "none"));
   const activeSection = document.getElementById(sectionId);
   if (activeSection) activeSection.style.display = "block";
