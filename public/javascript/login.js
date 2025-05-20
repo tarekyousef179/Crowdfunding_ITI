@@ -1,4 +1,17 @@
 import { User } from "../javascript/models/User.js";
+const user = JSON.parse(localStorage.getItem("loggedInUser"));
+console.log(user);
+switch (user) {
+  case "donor":
+    window.location.href = "/pages/donor-dashboard.html";
+    break;
+  case "student":
+    window.location.href = "/pages/student-dashboard.html";
+    break;
+  case "admin":
+    window.location.href = "/pages/admin-dashboard.html";
+    break;
+}
 const onSubmitForm = async (event) => {
   event.preventDefault();
 

@@ -1,5 +1,6 @@
 body {
   background-color: #f5f7fa;
+  position: relative;
 }
 .navbar {
   position: relative;

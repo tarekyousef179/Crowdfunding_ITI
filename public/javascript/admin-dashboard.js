@@ -1,6 +1,16 @@
 import { User } from "../javascript/models/User.js";
 import { Campaign } from "../javascript/models/campaign.js";
+import { user } from "./helpers/helpers.js";
+import { logoutUser } from "./helpers/helpers.js";
+const logout = document.getElementById("log-out");
 
+if (!user) {
+  window.location.href = "http://127.0.0.1:3000/";
+}
+logout.addEventListener("click", () => {
+  logoutUser();
+  window.location.href = "http://127.0.0.1:3000/";
+});
 const usersTabel = document.querySelector("#user-table-body");
 const compaignsTabel = document.querySelector("#campaign-table-body");
 const pledgesTable = document.querySelector("#pledge-table-body");

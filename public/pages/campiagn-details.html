@@ -4,7 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Campaign Details - Crowdfunding Platform</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../styles/alert.css" />
     <link rel="stylesheet" href="../styles/campaign-details.css" />
     <script type="module" src="../javascript/campaign-details.js"></script>
   </head>
@@ -28,9 +36,7 @@
 
     <div class="container">
       <div class="row">
-        <!-- Main Content -->
         <div class="col-md-9">
-          <!-- Campaign Details -->
           <div class="campaign-details my-4">
             <img
               id="campaign-image"
@@ -79,7 +85,6 @@
             </form>
           </div>
         </div>
-        <!-- Stats Sidebar -->
         <div class="col-md-3">
           <div class="stats-sidebar my-4">
             <h4>Campaign Stats</h4>
@@ -89,6 +94,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="alert-box2">
+      <i class="fa-solid fa-circle-check"></i>
+      <p class="alert-msg"></p>
+      <button class="hide btn">ok</button>
     </div>
     <script src="../bootstrap/bootstrap.bundle.min.js"></script>
   </body>

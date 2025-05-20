@@ -2,10 +2,10 @@ import { user } from "./helpers/helpers.js";
 import { Campaign } from "./models/campaign.js";
 import { Pledge } from "./models/Pledge.js";
 import { User } from "./models/User.js";
+import { showAlert } from "./helpers/alert.js";
 const campaignId = parseInt(sessionStorage.getItem("campaignId"));
 console.log(campaignId);
 const allPledges = await Pledge.getAllPledges();
-// console.log(allPledges.length);
 
 const currentUser = { ...user };
 const campaign = await Campaign.getcampaign(campaignId);
@@ -13,8 +13,8 @@ const campaign = await Campaign.getcampaign(campaignId);
 const pledges = await Pledge.getAllPledgesByCampaignId(campaignId);
 const creator = await User.getUser(campaign.creatorId);
 
-const amountRaised = pledges.reduce((sum, pledge) => sum + pledge.amount, 0);
-const progress = (amountRaised / campaign.goal) * 100;
+let amountRaised = pledges.reduce((sum, pledge) => sum + pledge.amount, 0);
+let progress = (amountRaised / campaign.goal) * 100;
 
 const deadlineDate = new Date(campaign.deadline);
 const today = new Date();
@@ -57,10 +57,6 @@ document
 
     const amount = parseInt(document.getElementById("pledge-amount").value);
 
-    if (amount <= 0) {
-      alert("Please enter a valid pledge amount.");
-      return;
-    }
     const newPledge = {
       id: allPledges.length + 1,
       amount,
@@ -68,8 +64,19 @@ document
       userId: currentUser.id,
     };
     Pledge.postPledge(newPledge);
-    alert("Thank you for backing this campaign!");
-    window.location.reload();
+    amountRaised += amount;
+    progress = (amountRaised / campaign.goal) * 100;
+    document.getElementById("amount-raised").textContent =
+      amountRaised.toLocaleString();
+    document.getElementById("stats-raised").textContent =
+      amountRaised.toLocaleString();
+    document.getElementById("progress-bar").style.width = `${progress}%`;
+    document.getElementById("progress-text").textContent = `${progress.toFixed(
+      1
+    )}%`;
+
+    // alert("Thank you for backing this campaign!");
+    showAlert("Thank you for backing this campaign!", true);
   });
 document.getElementById("backBtn").addEventListener("click", () => {
   location.href = "donor-dashboard.html";

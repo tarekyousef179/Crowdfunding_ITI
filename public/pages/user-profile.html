@@ -4,7 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Profile</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../styles/alert.css" />
     <link
       rel="stylesheet"
       href="../styles/user-profile.css
@@ -30,9 +38,6 @@
       </div>
     </nav>
     <div class="container">
-      <!-- <div class="profile-header bg-dark text-white">
-        <h2>My Profile</h2>
-      </div> -->
       <div class="card shadow p-4">
         <div class="text-center">
           <img
@@ -68,6 +73,11 @@
           <div id="alertBox" class="alert mt-3 d-none"></div>
         </form>
       </div>
+    </div>
+    <div class="alert-box2">
+      <i class="fa-solid fa-circle-check"></i>
+      <p class="alert-msg"></p>
+      <button class="hide btn">ok</button>
     </div>
   </body>
 </html>

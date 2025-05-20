@@ -2,10 +2,17 @@ import { Campaign } from "../javascript/models/campaign.js";
 import { Pledge } from "../javascript/models/Pledge.js";
 import { renderCampaigns } from "./main.js";
 import { user } from "./helpers/helpers.js";
+import { logoutUser } from "./helpers/helpers.js";
 const allCampaigns = await Campaign.getAllCampaigns();
 const approvedCampaigns = allCampaigns.filter((c) => c.isApproved);
-const allPledges = await Pledge.getAllPledges();
-
+const logout = document.getElementById("log-out");
+if (!user) {
+  window.location.href = "http://127.0.0.1:3000/";
+}
+logout.addEventListener("click", () => {
+  logoutUser();
+  window.location.href = "http://127.0.0.1:3000/";
+});
 const mypledges = await Pledge.getAllPledgesByUSerId(user.id);
 const pledgesTable = document.querySelector("#pledges-table-body");
 renderCampaigns(approvedCampaigns);

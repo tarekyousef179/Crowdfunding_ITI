@@ -1,5 +1,6 @@
 import { user } from "./helpers/helpers.js";
 import { User } from "./models/User.js";
+import { alertBox2, showAlert } from "./helpers/alert.js";
 const allUsers = await User.getAllUsers();
 const currentUser = { ...user };
 const usernameInput = document.getElementById("username");
@@ -34,16 +35,12 @@ document.getElementById("profileForm").addEventListener("submit", function (e) {
       user.id != currentUser.id
   );
   if (newPassword !== newConfirmedPassword) {
-    alertBox.className = "alert alert-danger mt-3";
-    alertBox.textContent = "Passwords do not match!";
-    alertBox.classList.remove("d-none");
+    showAlert("Passwords do not match!", false);
     return;
   }
 
   if (isDuplicate) {
-    alertBox.className = "alert alert-danger mt-3";
-    alertBox.textContent = "Email or username already in use!";
-    alertBox.classList.remove("d-none");
+    showAlert("Email or username already in use!", false);
     return;
   }
   const updatedUser = {
@@ -55,9 +52,7 @@ document.getElementById("profileForm").addEventListener("submit", function (e) {
   User.updateUserInDatabase(updatedUser);
   localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
   usernameDisplay.textContent = newUsername;
-  alertBox.className = "alert alert-success mt-3";
-  alertBox.textContent = "Profile updated successfully!";
-  alertBox.classList.remove("d-none");
+  showAlert("Profile updated successfully!", true);
 });
 
 document.getElementById("backBtn").addEventListener("click", () => {

@@ -1,17 +1,30 @@
 import { Campaign } from "../javascript/models/campaign.js";
 import { Pledge } from "../javascript/models/Pledge.js";
-import { user } from "./helpers/helpers.js";
-
+const redirect = function () {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  console.log(user);
+  switch (user) {
+    case "donor":
+      window.location.href = "/pages/donor-dashboard.html";
+      break;
+    case "student":
+      window.location.href = "/pages/student-dashboard.html";
+      break;
+    case "admin":
+      window.location.href = "/pages/admin-dashboard.html";
+      break;
+  }
+};
 const allCampaigns = await Campaign.getAllCampaigns();
 const approvedCampaigns = allCampaigns.filter((c) => c.isApproved);
 const allPledges = await Pledge.getAllPledges();
 const categorySelect = document.getElementById("category-filter");
-if (location.href == "http://localhost:3000/index.html") {
+if (location.href == "http://127.0.0.1:3000/") {
+  redirect();
   let toggle = document.querySelector(".toggle-menu");
   console.log(toggle);
   let mainNav = document.querySelector("header nav");
   let links = document.querySelectorAll("header nav a");
-
   toggle.addEventListener("click", function () {
     this.classList.toggle("fa-solid");
     this.classList.toggle("fa-xmark");
@@ -64,7 +77,6 @@ export function renderCampaigns(campaigns) {
   });
 }
 renderCampaigns(approvedCampaigns);
-
 categorySelect.addEventListener("input", () => {
   const selectedCategory = categorySelect.value;
   console.log(selectedCategory);
@@ -112,10 +124,10 @@ document.addEventListener("click", function (e) {
   if (e.target.classList.contains("donate-btn")) {
     const campaignId = e.target.dataset.campaignId;
     sessionStorage.setItem("campaignId", campaignId);
-    if (window.location.href == "http://localhost:3000/index.html") {
-      window.location.href = `http://localhost:3000/pages/login.html`;
+    if (window.location.href == "http://127.0.0.1:3000/") {
+      window.location.href = `http://127.0.0.1:3000/pages/login.html`;
     } else if (
-      window.location.href == "http://localhost:3000/pages/donor-dashboard.html"
+      window.location.href == "http://127.0.0.1:3000/pages/donor-dashboard.html"
     ) {
       window.location.href = "campiagn-details.html";
     }
