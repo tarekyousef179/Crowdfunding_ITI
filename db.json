@@ -10,9 +10,9 @@
     },
     {
       "id": "2",
-      "username": "Ahmed",
+      "username": "Ahmed1",
       "email": "ahmed@gmail.com",
-      "password": "123456",
+      "password": "147852",
       "role": "student",
       "isApproved": true,
       "isActive": true

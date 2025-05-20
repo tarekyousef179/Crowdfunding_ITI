@@ -74,31 +74,28 @@ const renderAccount = () => {
   mainContent.innerHTML = `
     <h3>My Account</h3>
     <form id="accountForm" class="mt-4">
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" class="form-control" value="${currentUser.username}" required />
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" id="email" class="form-control" value="${currentUser.email || ''}" required />
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" class="form-control" required />
-      </div>
-      <div class="mb-3">
-        <label for="confirmPassword" class="form-label">Confirm Password</label>
-        <input type="password" id="confirmPassword" class="form-control" required />
-      </div>
-      <div id="updateMessage" class="mt-3"></div>
-       <div class="d-flex gap-2">
-    <button type="submit" class="btn btn-primary">Update Account</button>
-    <button type="button" class="btn btn-secondary" id="cancelAccountBtn">Cancel</button>
-  </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" id="username" class="form-control" value=${currentUser.username} required />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" class="form-control" value=${currentUser.email} required />
+        </div>
+        <div class="mb-3">
+          <label for="newPassword" class="form-label">New Password</label>
+          <input type="password" id="newPassword"  class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" id="confirmPassword" class="form-control" />
+        </div>
+        <div id="updateMessage" class="mt-3"></div>
+        <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary">Update Account</button>
+      <button type="button" class="btn btn-secondary" id="cancelAccountBtn">Cancel</button>
+    </div>
     </form>
-    
-
-    
   `;
 
   const form = document.getElementById("accountForm");
@@ -108,8 +105,22 @@ const renderAccount = () => {
 
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
+    const password = document.getElementById("newPassword").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if(!username){
+      document.getElementById("updateMessage").innerHTML = `
+        <div class="alert alert-danger">UserName required.</div>
+      `;
+      return;
+    }
+
+    if(!email){
+        document.getElementById("updateMessage").innerHTML = `
+        <div class="alert alert-danger">Email required.</div>
+      `;
+      return;
+    }
 
     if (password !== confirmPassword) {
       document.getElementById("updateMessage").innerHTML = `
@@ -121,7 +132,7 @@ const renderAccount = () => {
     const updatedUser = {
       username,
       email,
-      password,
+      password: password || currentUser.password,
     };
 
     try {
@@ -142,7 +153,10 @@ const renderAccount = () => {
       document.getElementById("updateMessage").innerHTML = `
         <div class="alert alert-success">Account updated successfully.</div>
       `;
+
+      const timeoutid =  setTimeout(() => Promise.resolve(), 1500);
       form.reset();
+      clearTimeout(timeoutid)
     } catch (error) {
       document.getElementById("updateMessage").innerHTML = `
         <div class="alert alert-danger">Error updating account. Try again later.</div>
