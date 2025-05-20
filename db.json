@@ -82,15 +82,75 @@
       "password": "123456",
       "role": "donor",
       "isActive": true
+    },
+    {
+      "id": "1747426663117",
+      "username": "ahmed abc",
+      "email": "ahmed@gmail.com",
+      "password": "123456@#Aa",
+      "role": "student",
+      "isActive": true
+    },
+    {
+      "id": "1747705015674",
+      "username": "ahmed",
+      "email": "jihan@gmail.com",
+      "password": "Ahmad@123",
+      "role": "student",
+      "isActive": true
+    },
+    {
+      "id": "1747707248875",
+      "username": "ahmed",
+      "email": "mona@gmail.com",
+      "password": "Ahmed@123",
+      "role": "student",
+      "isActive": true
+    },
+    {
+      "id": "1747707609873",
+      "username": "jihan",
+      "email": "menna@gmail.com",
+      "password": "Ahmed@123",
+      "role": "student",
+      "isActive": true
+    },
+    {
+      "id": "1747707938133",
+      "username": "ahmed",
+      "email": "amira@gmail.com",
+      "password": "Ahmed@45",
+      "role": "student",
+      "isActive": true
     }
   ],
   "campaigns": [
     {
       "id": "1",
+<<<<<<< HEAD
       "title": "Funding for Web Development Course",
       "creatorId": 2,
       "goal": 3000,
       "deadline": "2025-07-01",
+=======
+      "title": "Smart Watch for Kids",
+      "description": "A smart watch designed specifically for children.",
+      "goal": 5000,
+      "deadline": "2025-07-01",
+      "rewards": [
+        {
+          "id": 1,
+          "description": "Thank You Email",
+          "minAmount": 10
+        },
+        {
+          "id": 2,
+          "description": "Free Watch Strap",
+          "minAmount": 50
+        }
+      ],
+      "image": "data:image/png;base64,...",
+>>>>>>> signup
       "isApproved": true,
       "category": "courses",
       "description": "Ahmed, 17 years old, from Cairo, needs funding to join a web development Course program.",

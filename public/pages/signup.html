@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - Scholarship Support</title>
+  <link href="../bootstrap/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f6f6f6;
+    }
+
+    .nav-link-custom {
+      color: #27548A !important;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link-custom:hover {
+      color: #dc972f !important;
+    }
+
+    #login-button {
+      background-color: #1DCD9F;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    #login-button:hover {
+      background-color: #17b98c;
+    }
+
+    .signup-box {
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-custom {
+      background-color: #17b98c;
+      color: #fff;
+    }
+
+    .btn-custom:hover {
+      background-color: #0c7e76;
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .form-footer a {
+      color: #0e9488;
+      text-decoration: none;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 767px) {
+      .image-col {
+        margin-bottom: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-light bg-white shadow-sm px-4 py-2" style="height: 70px;">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#" style="height: 10px;">
+        <img
+          src="../images/logo-bg.png"
+          alt="Logo"
+          class="d-inline-block"
+          style="height: 5rem; transform: scale(1.3); transform-origin: left center; object-fit: contain;"
+        />
+      </a>
+      <div class="d-flex gap-4">
+        <a href="/pages/home.html" class="text-decoration-none nav-link-custom">Home</a>
+        <a href="/pages/about.html" class="text-decoration-none nav-link-custom">About Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container my-5">
+    <div class="row justify-content-center align-items-center">
+      
+      <!-- Left Side: Image -->
+      <div class="col-md-6 image-col text-center">
+        <img src="../images/back-img.png" alt="Scholarship Image" class="img-fluid" style="max-width: 100%; height: auto;" />
+      </div>
+
+      <!-- Right Side: Form -->
+      <div class="col-md-6">
+        <div class="signup-box">
+          <h2 class="text-center mb-4" style="color: #dc972f;">Create Your Account</h2>
+
+          <form id="signup-form">
+            <!-- First Name -->
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="firstName" />
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" />
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" />
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" id="confirmPassword" />
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- User Type -->
+            <div class="mb-3">
+              <label class="form-label">I am signing up as:</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="userType" id="student" value="student">
+                <label class="form-check-label" for="student">
+                  A Student Seeking Support
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="userType" id="donor" value="donor">
+                <label class="form-check-label" for="donor">
+                  A Donor Looking to Help
+                </label>
+              </div>
+              <div id="userTypeError" class="text-danger mt-1" style="font-size: 0.875em;"></div>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-custom">Sign Up</button>
+            </div>
+          </form>
+
+          <div class="form-footer">
+           Already have an account? <a href="/Crowdfunding_ITI/public/pages/login.html">Log In</a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../javascript/signup.js" type="module"></script>
+</body>
+</html>
