@@ -50,6 +50,38 @@
       "password": "123456@#Aa",
       "role": "student",
       "isActive": true
+    },
+    {
+      "id": "1747705015674",
+      "username": "ahmed",
+      "email": "jihan@gmail.com",
+      "password": "Ahmad@123",
+      "role": "student",
+      "isActive": true
+    },
+    {
+      "id": "1747707248875",
+      "username": "ahmed",
+      "email": "mona@gmail.com",
+      "password": "Ahmed@123",
+      "role": "student",
+      "isActive": true
+    },
+    {
+      "id": "1747707609873",
+      "username": "jihan",
+      "email": "menna@gmail.com",
+      "password": "Ahmed@123",
+      "role": "student",
+      "isActive": true
+    },
+    {
+      "id": "1747707938133",
+      "username": "ahmed",
+      "email": "amira@gmail.com",
+      "password": "Ahmed@45",
+      "role": "student",
+      "isActive": true
     }
   ],
   "campaigns": [

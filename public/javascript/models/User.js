@@ -22,6 +22,11 @@ export class User {
       console.log(error);
     }
   };
+  static async findUserByEmail(email) {
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  return users.find(user => user.email === email) || null;
+}
+
 
     static register = async function (userData) {
     try {
