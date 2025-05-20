@@ -1,5 +1,4 @@
 import { User } from "../javascript/models/User.js";
-
 const onSubmitForm = async (event) => {
   event.preventDefault();
 
@@ -24,7 +23,6 @@ const onSubmitForm = async (event) => {
 
   if (user) {
     localStorage.setItem("loggedInUser", JSON.stringify(user));
-
     if (user.role === "donor") {
       window.location.href = "donor-dashboard.html";
     } else if (user.role === "student") {

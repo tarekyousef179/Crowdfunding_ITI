@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campaign Details - Crowdfunding Platform</title>
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../styles/campaign-details.css" />
+    <script type="module" src="../javascript/campaign-details.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">CROWDFUNDING</a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <!-- Main Content -->
+        <div class="col-md-9">
+          <!-- Campaign Details -->
+          <div class="campaign-details my-4">
+            <img
+              id="campaign-image"
+              class="campaign-image"
+              alt="Campaign Image"
+            />
+            <h2 id="campaign-title" class="mt-3"></h2>
+            <p id="campaign-description"></p>
+            <p><strong>Creator:</strong> <span id="campaign-creator"></span></p>
+            <p><strong>Goal:</strong> $<span id="campaign-goal"></span></p>
+            <p>
+              <strong>Deadline:</strong> <span id="campaign-deadline"></span>
+            </p>
+            <div class="progress">
+              <div id="progress-bar" class="progress-bar" style="width: 0%">
+                <span id="progress-text"></span>
+              </div>
+            </div>
+            <p>
+              <strong>Raised:</strong> $<span id="amount-raised"></span> of
+              $<span id="campaign-goal-2"></span>
+            </p>
+          </div>
+          <!-- Backing Section -->
+          <div class="backing-section">
+            <h3>Back This Campaign</h3>
+            <form id="backing-form">
+              <div class="mb-3">
+                <label for="pledge-amount" class="form-label"
+                  >Pledge Amount ($)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="pledge-amount"
+                  min="1"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-secondary">
+                Back This Campaign
+              </button>
+              <button type="button" id="backBtn" class="btn btn-secondary ms-2">
+                Back to Dashboard
+              </button>
+            </form>
+          </div>
+        </div>
+        <!-- Stats Sidebar -->
+        <div class="col-md-3">
+          <div class="stats-sidebar my-4">
+            <h4>Campaign Stats</h4>
+            <p><strong>Goal:</strong> $<span id="stats-goal"></span></p>
+            <p><strong>Raised:</strong> $<span id="stats-raised"></span></p>
+            <p><strong>Days Left:</strong> <span id="days-left"></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../bootstrap/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

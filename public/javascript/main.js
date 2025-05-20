@@ -1,9 +1,31 @@
 import { Campaign } from "../javascript/models/campaign.js";
 import { Pledge } from "../javascript/models/Pledge.js";
+import { user } from "./helpers/helpers.js";
+
 const allCampaigns = await Campaign.getAllCampaigns();
 const approvedCampaigns = allCampaigns.filter((c) => c.isApproved);
 const allPledges = await Pledge.getAllPledges();
 const categorySelect = document.getElementById("category-filter");
+if (location.href == "http://localhost:3000/index.html") {
+  let toggle = document.querySelector(".toggle-menu");
+  console.log(toggle);
+  let mainNav = document.querySelector("header nav");
+  let links = document.querySelectorAll("header nav a");
+
+  toggle.addEventListener("click", function () {
+    this.classList.toggle("fa-solid");
+    this.classList.toggle("fa-xmark");
+    mainNav.classList.toggle("custom-nav");
+  });
+  links.forEach((link) => {
+    link.addEventListener("click", function () {
+      if (mainNav.classList.contains("custom-nav")) {
+        mainNav.classList.remove("custom-nav");
+        toggle.classList.remove("fa-solid", "fa-xmark");
+      }
+    });
+  });
+}
 
 export function renderCampaigns(campaigns) {
   const container = document.querySelector(".cards");
@@ -36,30 +58,13 @@ export function renderCampaigns(campaigns) {
               <span class="progress-text">${progressPercent}%</span>
          </div>
       </div>
-      <button onclick="donate(${campaign.id})"> Donate Now</button>
-    `;
+      <button class ="donate-btn" data-campaign-id="${campaign.id}">Donate Now</button>
+          `;
     container.appendChild(card);
   });
 }
 renderCampaigns(approvedCampaigns);
-let toggle = document.querySelector(".toggle-menu");
-let mainNav = document.querySelector("header nav");
-let links = document.querySelectorAll("header nav a");
-document.addEventListener("load", function () {
-  toggle.addEventListener("click", function () {
-    this.classList.toggle("fa-solid");
-    this.classList.toggle("fa-xmark");
-    mainNav.classList.toggle("custom-nav");
-  });
-  links.forEach((link) => {
-    link.addEventListener("click", function () {
-      if (mainNav.classList.contains("custom-nav")) {
-        mainNav.classList.remove("custom-nav");
-        toggle.classList.remove("fa-solid", "fa-xmark");
-      }
-    });
-  });
-});
+
 categorySelect.addEventListener("input", () => {
   const selectedCategory = categorySelect.value;
   console.log(selectedCategory);
@@ -101,6 +106,18 @@ sortSelect.addEventListener("change", function () {
       return dateB - dateA;
     }
   });
-
   renderCampaigns(sortedCampaigns);
+});
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("donate-btn")) {
+    const campaignId = e.target.dataset.campaignId;
+    sessionStorage.setItem("campaignId", campaignId);
+    if (window.location.href == "http://localhost:3000/index.html") {
+      window.location.href = `http://localhost:3000/pages/login.html`;
+    } else if (
+      window.location.href == "http://localhost:3000/pages/donor-dashboard.html"
+    ) {
+      window.location.href = "campiagn-details.html";
+    }
+  }
 });
