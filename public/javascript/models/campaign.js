@@ -1,13 +1,4 @@
 export class Campaign {
-  constructor(id, title, creatorId, goal, deadline, ...rewards) {
-    this.id = id;
-    this.title = title;
-    this.creatorId = creatorId;
-    this.goal = goal;
-    this.deadline = deadline;
-    this.isApproved = false;
-    this.rewards = rewards;
-  }
   static getAllCampaigns = async function () {
     try {
       const response = await fetch("http://localhost:3000/campaigns");
@@ -25,4 +16,25 @@ export class Campaign {
       console.log(error);
     }
   };
+  static async approveCampaign(id) {
+    await fetch(`http://localhost:3000/campaigns/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ isApproved: true }),
+    });
+  }
+
+  static async rejectCampaign(id) {
+    await fetch(`http://localhost:3000/campaigns/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ isApproved: false }),
+    });
+  }
+
+  static async deleteCampaign(id) {
+    await fetch(`http://localhost:3000/campaigns/${id}`, {
+      method: "DELETE",
+    });
+  }
 }

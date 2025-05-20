@@ -4,10 +4,10 @@ import { Campaign } from "../javascript/models/campaign.js";
 const usersTabel = document.querySelector("#user-table-body");
 const compaignsTabel = document.querySelector("#campaign-table-body");
 const pledgesTable = document.querySelector("#pledge-table-body");
-const users = await User.getAllUsers();
-const allCampaigns = await Campaign.getAllCampaigns();
-const ApprovedCam = allCampaigns.filter((cam) => cam["isApproved"]);
-const PendingCam = allCampaigns.filter((cam) => !cam["isApproved"]);
+let users = await User.getAllUsers();
+let allCampaigns = await Campaign.getAllCampaigns();
+let ApprovedCam = allCampaigns.filter((cam) => cam["isApproved"]);
+let PendingCam = allCampaigns.filter((cam) => !cam["isApproved"]);
 document.getElementById("total-users").textContent = users.length;
 document.getElementById("active-campaigns").textContent = ApprovedCam.length;
 document.getElementById("pending-campaigns").textContent = PendingCam.length;
@@ -30,12 +30,13 @@ const loadUsers = function () {
 
     const actionTd = document.createElement("td");
     const actionBtn = document.createElement("button");
-    actionBtn.classList.add("btn", "btn-outline-secondary");
+    actionBtn.classList.add("btn");
     actionBtn.textContent = user.isActive ? "Ban" : "Unban";
+    actionBtn.className = user.isActive ? "btn btn-primary" : "btn btn-danger";
     actionBtn.style.width = "100%";
-
     actionBtn.addEventListener("click", async () => {
       await User.toggleActiveStatus(user.id, user.isActive);
+      users = await User.getAllUsers();
       loadUsers();
     });
 
@@ -63,12 +64,8 @@ const loadCampaigns = function () {
       <td>${campaign.description}</td>
       <td>${campaign.isApproved ? "Active" : "Pending"}</td>
       <td>
-        <button class="approve btn btn-outline-secondary" data-id="${
-          campaign.id
-        }">Approve</button>
-        <button class="reject btn btn-outline-secondary" data-id="${
-          campaign.id
-        }")">reject</button>
+        <button class="approve" data-id="${campaign.id}"></button>
+        <button class="reject" data-id="${campaign.id}")"></button>
         <button class="delete btn btn-outline-secondary" data-id="${
           campaign.id
         }")">delete</button>
@@ -78,23 +75,60 @@ const loadCampaigns = function () {
   });
 };
 loadCampaigns();
-document.querySelectorAll(".approve").forEach((btn) =>
-  btn.addEventListener("click", async () => {
-    await User.approveCampaign(btn.dataset.id);
-    loadCampaigns();
-  })
-);
-
-document.querySelectorAll(".reject").forEach((btn) =>
-  btn.addEventListener("click", async () => {
-    await User.rejectCampaign(btn.dataset.id);
-    loadCampaigns();
-  })
-);
-
+const btnAproveStatus = async function () {
+  document.querySelectorAll(".approve").forEach(async (btn) => {
+    let campaign = await Campaign.getcampaign(btn.dataset.id);
+    btn.textContent = campaign.isApproved ? "Approved" : "Approve";
+    btn.className = campaign.isApproved
+      ? "approve btn btn-primary"
+      : "approve btn btn-outline-secondary";
+    allCampaigns = await Campaign.getAllCampaigns();
+    ApprovedCam = allCampaigns.filter((cam) => cam["isApproved"]);
+    document.getElementById("active-campaigns").textContent =
+      ApprovedCam.length;
+  });
+};
+const btnRejectStatus = async function () {
+  document.querySelectorAll(".reject").forEach(async (btn) => {
+    let campaign = await Campaign.getcampaign(btn.dataset.id);
+    btn.textContent = campaign.isApproved ? "Reject" : "Rejected";
+    btn.className = campaign.isApproved
+      ? "reject btn btn-outline-secondary"
+      : "reject btn btn-danger";
+    allCampaigns = await Campaign.getAllCampaigns();
+    PendingCam = allCampaigns.filter((cam) => !cam["isApproved"]);
+    document.getElementById("pending-campaigns").textContent =
+      PendingCam.length;
+  });
+};
+const initCampaignButtons = async function () {
+  document.querySelectorAll(".approve").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      await Campaign.approveCampaign(btn.dataset.id);
+      allCampaigns = await Campaign.getAllCampaigns();
+      loadCampaigns();
+      btnAproveStatus();
+      btnRejectStatus();
+      initCampaignButtons();
+    });
+  });
+  document.querySelectorAll(".reject").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      await Campaign.rejectCampaign(btn.dataset.id);
+      allCampaigns = await Campaign.getAllCampaigns();
+      loadCampaigns();
+      btnRejectStatus();
+      btnAproveStatus();
+      initCampaignButtons();
+    });
+  });
+};
+btnAproveStatus();
+btnRejectStatus();
+initCampaignButtons();
 document.querySelectorAll(".delete").forEach((btn) =>
   btn.addEventListener("click", async () => {
-    await User.deleteCampaign(btn.dataset.id);
+    await Campaign.deleteCampaign(btn.dataset.id);
     loadCampaigns();
   })
 );
@@ -143,10 +177,11 @@ const showSection = function (sectionId) {
   const activeSection = document.getElementById(sectionId);
   if (activeSection) activeSection.style.display = "block";
 };
-const alllis = document.querySelectorAll(".sidebar li");
+const alllis = document.querySelectorAll(".sidebar a");
 alllis.forEach((li) => {
   li.addEventListener("click", function () {
-    console.log(this);
+    alllis.forEach((li) => li.classList.remove("active"));
+    this.classList.add("active");
     if (this.textContent.trim() === "Users") {
       showSection("usersSection");
     } else if (this.textContent.trim() === "Campaigns") {

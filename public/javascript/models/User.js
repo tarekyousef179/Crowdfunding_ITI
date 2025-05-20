@@ -1,15 +1,4 @@
 export class User {
-  constructor(id, name, email, password, isActive = true, role = "donor") {
-    if (!["donor", "student"].includes(role)) {
-      throw new Error("Invalid role. Role must be either 'donor' or 'student'");
-    }
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.isActive = isActive;
-    this.role = role;
-  }
   static getAllUsers = async function () {
     try {
       const response = await fetch("http://localhost:3000/users");
@@ -74,29 +63,6 @@ export class User {
       };
     }
   };
-
-  static async approveCampaign(id) {
-    await fetch(`http://localhost:3000/campaigns/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ isApproved: true }),
-    });
-  }
-
-  static async rejectCampaign(id) {
-    await fetch(`http://localhost:3000/campaigns/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ isApproved: false }),
-    });
-  }
-
-  static async deleteCampaign(id) {
-    await fetch(`http://localhost:3000/campaigns/${id}`, {
-      method: "DELETE",
-    });
-  }
-
   static async toggleActiveStatus(id, currentStatus) {
     await fetch(`http://localhost:3000/users/${id}`, {
       method: "PATCH",
