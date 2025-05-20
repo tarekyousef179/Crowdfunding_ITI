@@ -28,7 +28,9 @@ const onSubmitForm = async (event) => {
     if (user.role === "donor") {
       window.location.href = "/donor-dashboard.html";
     } else if (user.role === "student") {
-      window.location.href = "/student-dashboard.html";
+      window.location.href = "/pages/student-dashboard.html";
+    } else if (user.role === "admin") {
+      window.location.href = "/pages/admin-dashboard.html";
     } else {
       window.location.href = "/admin-dashboard.html";
     }
@@ -37,7 +39,7 @@ const onSubmitForm = async (event) => {
     if (errorCode === "userNotFound") {
       formErrorField.innerText = errorMessage;
     } else if (errorCode === "wrongPassword") {
-      formErrorField.innerHTML = errorMessage;
+      formErrorField.innerText = errorMessage;
     } else {
       formErrorField.innerText = errorMessage || "An unknown error occurred.";
     }
