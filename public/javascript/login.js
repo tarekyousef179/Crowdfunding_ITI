@@ -48,7 +48,7 @@ const onSubmitForm = async (event) => {
     if (errorCode === "userNotFound") {
       formErrorField.innerText = errorMessage;
     } else if (errorCode === "wrongPassword") {
-      formErrorField.innerHTML = errorMessage;
+      formErrorField.innerText = errorMessage;
     } else {
       formErrorField.innerText = errorMessage || "An unknown error occurred.";
     }
