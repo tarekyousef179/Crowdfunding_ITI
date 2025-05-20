@@ -100,4 +100,16 @@ export class User {
       body: JSON.stringify({ isActive: !currentStatus }),
     });
   }
+
+  static findRequestByUserId = async function (userId) {
+  try {
+    const response = await fetch(`http://localhost:3000/requests?studentId=${userId}`);
+    if (!response.ok) throw new Error("Failed to fetch requests");
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching requests by user ID:", error);
+    return [];
+  }
+};
 }
+
