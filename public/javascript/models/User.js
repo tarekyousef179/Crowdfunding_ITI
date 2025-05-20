@@ -17,7 +17,36 @@ export class User {
       console.log(error);
     }
   };
-<<<<<<< HEAD
+  static async findUserByEmail(email) {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    return users.find((user) => user.email === email) || null;
+  }
+
+  static register = async function (userData) {
+    try {
+      const users = await User.getAllUsers();
+      const userExists = users.some((u) => u.email === userData.email);
+      if (userExists) {
+        return { user: null, errorMessage: "Email already registered." };
+      }
+
+      const response = await fetch("http://localhost:3000/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        return { user: null, errorMessage: "Failed to register user." };
+      }
+
+      const newUser = await response.json();
+      return { user: newUser, errorMessage: null };
+    } catch (error) {
+      console.error(error);
+      return { user: null, errorMessage: "An error occurred." };
+    }
+  };
   static updateUserInDatabase = async function (updatedUser) {
     try {
       await fetch(`http://localhost:3000/users/${updatedUser.id}`, {
@@ -64,59 +93,6 @@ export class User {
       };
     }
   };
-=======
-  static async findUserByEmail(email) {
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-  return users.find(user => user.email === email) || null;
-}
-
-
-    static register = async function (userData) {
-    try {
-      
-      const users = await User.getAllUsers();
-      const userExists = users.some(u => u.email === userData.email);
-      if (userExists) {
-        return { user: null, errorMessage: "Email already registered." };
-      }
-      
-      const response = await fetch("http://localhost:3000/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        return { user: null, errorMessage: "Failed to register user." };
-      }
-
-      const newUser = await response.json();
-      return { user: newUser, errorMessage: null };
-    } catch (error) {
-      console.error(error);
-      return { user: null, errorMessage: "An error occurred." };
-    }
-  };
-  static async approveCampaign(id) {
-    await fetch(`http://localhost:3000/campaigns/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ isApproved: true }),
-    });
-  }
-  static async rejectCampaign(id) {
-    await fetch(`http://localhost:3000/campaigns/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ isApproved: false }),
-    });
-  }
-  static async deleteCampaign(id) {
-    await fetch(`http://localhost:3000/campaigns/${id}`, {
-      method: "DELETE",
-    });
-  }
->>>>>>> signup
   static async toggleActiveStatus(id, currentStatus) {
     await fetch(`http://localhost:3000/users/${id}`, {
       method: "PATCH",
