@@ -139,7 +139,11 @@ initCampaignButtons();
 document.querySelectorAll(".delete").forEach((btn) =>
   btn.addEventListener("click", async () => {
     await Campaign.deleteCampaign(btn.dataset.id);
+    allCampaigns = await Campaign.getAllCampaigns();
     loadCampaigns();
+    btnRejectStatus();
+    btnAproveStatus();
+    initCampaignButtons();
   })
 );
 async function getTotalpledges() {

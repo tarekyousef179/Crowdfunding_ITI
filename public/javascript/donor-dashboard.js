@@ -19,11 +19,13 @@ renderCampaigns(approvedCampaigns);
 const loadPledges = async function () {
   try {
     pledgesTable.innerHTML = "";
+    if (mypledges.length === 0) pledgesTable.textContent = "No data to show";
     mypledges.forEach(async (pledge) => {
       const row = document.createElement("tr");
 
       const pledgeTd = document.createElement("td");
       const relatedCampaign = await Campaign.getcampaign(pledge.campaignId);
+      console.log(relatedCampaign);
       pledgeTd.textContent = await relatedCampaign.title;
       const amountTd = document.createElement("td");
       amountTd.textContent = `$${pledge.amount}`;
@@ -60,4 +62,22 @@ alllis.forEach((li) => {
       showSection("pledges");
     }
   });
+});
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("donate-btn")) {
+    const campaignId = e.target.dataset.campaignId;
+    sessionStorage.setItem("campaignId", campaignId);
+    if (
+      window.location.href == "http://127.0.0.1:3000/" ||
+      window.location.href == "http://127.0.0.1:3000/index.html"
+    ) {
+      window.location.href = `http://127.0.0.1:3000/pages/login.html`;
+    } else if (
+      window.location.href ==
+        "http://127.0.0.1:3000/pages/donor-dashboard.html" ||
+      this.location.href == "http://127.0.0.1:3000/pages/donor-dashboard.html#"
+    ) {
+      window.location.href = "campiagn-details.html";
+    }
+  }
 });

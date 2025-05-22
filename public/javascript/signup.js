@@ -1,17 +1,17 @@
 import { User } from "../javascript/models/User.js";
 
 function showError(input, message) {
-  const formGroup = input.closest('.mb-3');
-  const feedback = formGroup.querySelector('.invalid-feedback');
+  const formGroup = input.closest(".mb-3");
+  const feedback = formGroup.querySelector(".invalid-feedback");
   feedback.textContent = message;
-  input.classList.add('is-invalid');
+  input.classList.add("is-invalid");
 }
 
 function clearError(input) {
-  const formGroup = input.closest('.mb-3');
-  const feedback = formGroup.querySelector('.invalid-feedback');
-  feedback.textContent = '';
-  input.classList.remove('is-invalid');
+  const formGroup = input.closest(".mb-3");
+  const feedback = formGroup.querySelector(".invalid-feedback");
+  feedback.textContent = "";
+  input.classList.remove("is-invalid");
 }
 
 function clearAllErrors(fields) {
@@ -19,7 +19,7 @@ function clearAllErrors(fields) {
     if (key === "userType") return;
     clearError(field);
   });
-  document.getElementById('userTypeError').textContent = '';
+  document.getElementById("userTypeError").textContent = "";
 }
 
 function isValidEmail(email) {
@@ -33,7 +33,7 @@ function isStrongPassword(pw) {
 }
 
 function validateUserType(fields) {
-  const userTypeErrorDiv = document.getElementById('userTypeError');
+  const userTypeErrorDiv = document.getElementById("userTypeError");
   let checked = false;
   for (const radio of fields.userType) {
     if (radio.checked) {
@@ -42,65 +42,62 @@ function validateUserType(fields) {
     }
   }
   if (!checked) {
-    userTypeErrorDiv.textContent = 'Please select a user type.';
+    userTypeErrorDiv.textContent = "Please select a user type.";
     return false;
   }
-  userTypeErrorDiv.textContent = '';
+  userTypeErrorDiv.textContent = "";
   return true;
 }
 
 function clearForm(fields) {
   Object.entries(fields).forEach(([key, field]) => {
-    if (key === 'userType') {
-      Array.from(field).forEach(radio => radio.checked = false);
+    if (key === "userType") {
+      Array.from(field).forEach((radio) => (radio.checked = false));
     } else {
-      field.value = '';
+      field.value = "";
     }
   });
   clearAllErrors(fields);
-  document.getElementById('userTypeError').textContent = '';
+  document.getElementById("userTypeError").textContent = "";
 }
 
 const onSubmitForm = async (event) => {
   event.preventDefault();
 
   const fields = {
-    firstName: document.getElementById('firstName'),
-    email: document.getElementById('email'),
-    password: document.getElementById('password'),
-    confirmPassword: document.getElementById('confirmPassword'),
-    userType: document.getElementsByName('userType'),
+    firstName: document.getElementById("firstName"),
+    email: document.getElementById("email"),
+    password: document.getElementById("password"),
+    confirmPassword: document.getElementById("confirmPassword"),
+    userType: document.getElementsByName("userType"),
   };
 
   clearAllErrors(fields);
 
-  const {
-    email,
-    confirmPassword,
-    firstName,
-    password,
-    userType
-  } = fields;
+  const { email, confirmPassword, firstName, password, userType } = fields;
 
   let isValid = true;
 
   if (!firstName.value.trim()) {
-    showError(firstName, 'Please enter your first name.');
+    showError(firstName, "Please enter your first name.");
     isValid = false;
   }
 
   if (!isValidEmail(email.value)) {
-    showError(email, 'Please enter a valid email address.');
+    showError(email, "Please enter a valid email address.");
     isValid = false;
   }
 
   if (!isStrongPassword(password.value)) {
-    showError(password, 'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.');
+    showError(
+      password,
+      "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
+    );
     isValid = false;
   }
 
   if (password.value !== confirmPassword.value) {
-    showError(confirmPassword, 'Password and Confirm Password do not match.');
+    showError(confirmPassword, "Password and Confirm Password do not match.");
     isValid = false;
   }
 
@@ -109,13 +106,16 @@ const onSubmitForm = async (event) => {
   }
 
   if (!isValid) {
-    return;  
+    return;
   }
 
   const existingUser = await User.findUserByEmail(email.value.trim());
   if (existingUser) {
-    showError(email, 'This email is already registered. Please log in instead.');
-    return;  
+    showError(
+      email,
+      "This email is already registered. Please log in instead."
+    );
+    return;
   }
 
   const userData = {
@@ -123,21 +123,22 @@ const onSubmitForm = async (event) => {
     username: firstName.value.trim(),
     email: email.value.trim(),
     password: password.value,
-    role: Array.from(userType).find(r => r.checked).value,
-    isActive: true
+    role: Array.from(userType).find((r) => r.checked).value,
+    isActive: true,
   };
 
   const { user, errorMessage } = await User.register(userData);
+  localStorage.setItem("loggedInUser", JSON.stringify(userData));
 
   if (user) {
     clearForm(fields);
 
-    if (userData.role === 'student') {
-      window.location.pathname = "/Crowdfunding_ITI/public/pages/student_home.html";
-    } else if (userData.role === 'donor') {
-      window.location.pathname = "/Crowdfunding_ITI/public/pages/donor_home.html";
+    if (userData.role === "student") {
+      window.location.pathname = "/pages/student.html";
+    } else if (userData.role === "donor") {
+      window.location.pathname = "/pages/donor-dashboard.html";
     } else {
-      window.location.pathname = "/Crowdfunding_ITI/public/pages/home.html";
+      window.location.pathname = "/";
     }
   } else {
     console.error(errorMessage);
@@ -145,12 +146,9 @@ const onSubmitForm = async (event) => {
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('#signup-form');
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("#signup-form");
   if (form) {
-    form.addEventListener('submit', onSubmitForm);
+    form.addEventListener("submit", onSubmitForm);
   }
 });
-
-
-

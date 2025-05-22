@@ -10,7 +10,9 @@ const getTotalSum = (requests) =>
   requests.reduce((acc, { amount }) => acc + Number(amount), 0);
 
 const calculateApprovedRequests = (requests) => {
-  const approvedRequests = requests.filter(({ status }) => status === "Approved");
+  const approvedRequests = requests.filter(
+    ({ status }) => status === "Approved"
+  );
   return getTotalSum(approvedRequests);
 };
 
@@ -37,15 +39,25 @@ const renderRequests = async (userId) => {
     return;
   }
 
-  const rows = requests.map(({ requestType, date, status, description, amount }) => `
+  const rows = requests
+    .map(
+      ({ requestType, date, status, description, amount }) => `
     <tr>
       <td>${requestType}</td>
       <td>${date}</td>
-      <td><span class="badge ${status === 'Approved' ? 'bg-success' : status === 'Rejected' ? 'bg-danger' : 'bg-warning text-dark'}">${status}</span></td>
+      <td><span class="badge ${
+        status === "Approved"
+          ? "bg-success"
+          : status === "Rejected"
+          ? "bg-danger"
+          : "bg-warning text-dark"
+      }">${status}</span></td>
       <td>${description}</td>
       <td>$${amount}</td>
     </tr>
-  `).join("");
+  `
+    )
+    .join("");
 
   mainContent.innerHTML = `
     <h3>My Campaigns</h3>
@@ -64,7 +76,9 @@ const renderRequests = async (userId) => {
       </table>
     </div>
     <div class="mt-3">
-      <h6>Total Approved Funding: <strong>$${calculateApprovedRequests(requests)}</strong></h6>
+      <h6>Total Approved Funding: <strong>$${calculateApprovedRequests(
+        requests
+      )}</strong></h6>
     </div>
   `;
 };
@@ -108,15 +122,15 @@ const renderAccount = () => {
     const password = document.getElementById("newPassword").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if(!username){
+    if (!username) {
       document.getElementById("updateMessage").innerHTML = `
         <div class="alert alert-danger">UserName required.</div>
       `;
       return;
     }
 
-    if(!email){
-        document.getElementById("updateMessage").innerHTML = `
+    if (!email) {
+      document.getElementById("updateMessage").innerHTML = `
         <div class="alert alert-danger">Email required.</div>
       `;
       return;
@@ -154,18 +168,18 @@ const renderAccount = () => {
         <div class="alert alert-success">Account updated successfully.</div>
       `;
 
-      const timeoutid =  setTimeout(() => Promise.resolve(), 1500);
+      const timeoutid = setTimeout(() => Promise.resolve(), 1500);
       form.reset();
-      clearTimeout(timeoutid)
+      clearTimeout(timeoutid);
     } catch (error) {
       document.getElementById("updateMessage").innerHTML = `
         <div class="alert alert-danger">Error updating account. Try again later.</div>
       `;
     }
   });
-   document.getElementById("cancelAccountBtn").addEventListener("click", () => {
+  document.getElementById("cancelAccountBtn").addEventListener("click", () => {
     document.getElementById("username").value = currentUser.username;
-    document.getElementById("email").value = currentUser.email || '';
+    document.getElementById("email").value = currentUser.email || "";
     document.getElementById("password").value = "";
     document.getElementById("confirmPassword").value = "";
     document.getElementById("updateMessage").innerHTML = "";
@@ -183,7 +197,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   async function updateBadge() {
     try {
-      const res = await fetch(`http://localhost:3000/requests?studentId=${currentUser.id}`);
+      const res = await fetch(
+        `http://localhost:3000/requests?studentId=${currentUser.id}`
+      );
       const data = await res.json();
       if (badgeRequests) {
         badgeRequests.textContent = data.length > 0 ? data.length : "";
@@ -199,18 +215,20 @@ document.addEventListener("DOMContentLoaded", function () {
       <div class="row g-4" id="funded-cards"></div>`;
 
     try {
-      const response = await fetch(`http://localhost:3000/fundedRequests?studentId=${id}`);
+      const response = await fetch(
+        `http://localhost:3000/fundedRequests?studentId=${id}`
+      );
       const fundedRequests = await response.json();
-      const container = document.getElementById('funded-cards');
+      const container = document.getElementById("funded-cards");
 
       if (fundedRequests.length === 0) {
         container.innerHTML = `<p>No funded requests yet.</p>`;
         return;
       }
 
-      fundedRequests.forEach(req => {
-        const card = document.createElement('div');
-        card.className = 'col-md-6 col-lg-4';
+      fundedRequests.forEach((req) => {
+        const card = document.createElement("div");
+        card.className = "col-md-6 col-lg-4";
         card.innerHTML = `
           <div class="card shadow-lg rounded-3">
             <img src="${req.image}" class="card-img-top" alt="${req.type}">
@@ -225,18 +243,20 @@ document.addEventListener("DOMContentLoaded", function () {
         container.appendChild(card);
       });
     } catch (error) {
-      console.error('Error loading funded requests:', error);
-      document.getElementById('funded-cards').innerHTML = `<p class="text-danger">Error loading data.</p>`;
+      console.error("Error loading funded requests:", error);
+      document.getElementById(
+        "funded-cards"
+      ).innerHTML = `<p class="text-danger">Error loading data.</p>`;
     }
   }
 
   function renderNewRequest() {
-      mainContent.innerHTML = `
+    mainContent.innerHTML = `
       <h3>Submit a New campaign</h3>
       <form id="newRequestForm" class="mt-4 needs-validation" novalidate>
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="campaignType" class="form-label">Type of Request</label>
+            <label for="campaignType" class="form-label">Category</label>
             <select id="campaignType" class="form-select" required>
               <option value="" disabled selected>Select type</option>
               <option value="Scholarship">Study abroad</option>
@@ -250,6 +270,11 @@ document.addEventListener("DOMContentLoaded", function () {
             <label for="campaignImage" class="form-label">Upload an Image</label>
             <input type="file" id="campaignImage" class="form-control" accept="image/*" required />
             <div class="invalid-feedback">Please upload an image.</div>
+          </div>
+        </div>
+             <div class="col-md-6">
+            <label for="campaignTitle" class="form-label">Campaign Title</label>
+            <input type="text" id="campaignTitle" class="form-control"  required />
           </div>
         </div>
 
@@ -280,12 +305,17 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
 
     const form = document.getElementById("newRequestForm");
-    const savedFormData = JSON.parse(localStorage.getItem("newRequestData")) || {};
+    const savedFormData =
+      JSON.parse(localStorage.getItem("newRequestData")) || {};
 
-    document.getElementById("campaignType").value = savedFormData.requestType || "";
-    document.getElementById("requestReason").value = savedFormData.description || "";
-    document.getElementById("campaignDeadline").value = savedFormData.deadline || "";
-    document.getElementById("campaignAmount").value = savedFormData.amount || "";
+    document.getElementById("campaignType").value =
+      savedFormData.requestType || "";
+    document.getElementById("requestReason").value =
+      savedFormData.description || "";
+    document.getElementById("campaignDeadline").value =
+      savedFormData.deadline || "";
+    document.getElementById("campaignAmount").value =
+      savedFormData.amount || "";
 
     const updateLocalStorage = () => {
       const data = {
@@ -297,15 +327,22 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("newRequestData", JSON.stringify(data));
     };
 
-    ["campaignType", "requestReason", "campaignDeadline", "campaignAmount"].forEach((id) => {
+    [
+      "campaignType",
+      "requestReason",
+      "campaignDeadline",
+      "campaignAmount",
+    ].forEach((id) => {
       document.getElementById(id).addEventListener("input", updateLocalStorage);
     });
 
-    document.getElementById("cancelRequestBtn").addEventListener("click", () => {
-      form.reset();
-      form.classList.remove("was-validated");
-      localStorage.removeItem("newRequestData");
-    });
+    document
+      .getElementById("cancelRequestBtn")
+      .addEventListener("click", () => {
+        form.reset();
+        form.classList.remove("was-validated");
+        localStorage.removeItem("newRequestData");
+      });
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -322,16 +359,39 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      const newCampaign = {
+        id: Date.now().toString(),
+        title: document.getElementById("campaignTitle").value,
+        creatorId: currentUser.id,
+        goal: parseFloat(
+          document.getElementById("campaignAmount").value
+        ).toFixed(2),
+        deadline: document.getElementById("campaignDeadline").value,
+        isApproved: false,
+        category: document.getElementById("campaignType").value,
+        description: document.getElementById("requestReason").value,
+        image: base64Image,
+      };
+      try {
+        const response = await fetch("http://localhost:3000/campaigns", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newCampaign),
+        });
+      } catch (error) {
+        console.log(error);
+      }
       const newRequest = {
         requestType: document.getElementById("campaignType").value,
         date: new Date().toLocaleDateString(),
         status: "Pending",
         description: document.getElementById("requestReason").value,
-        amount: parseFloat(document.getElementById("campaignAmount").value).toFixed(2),
+        amount: parseFloat(
+          document.getElementById("campaignAmount").value
+        ).toFixed(2),
         image: base64Image,
         studentId: currentUser.id,
       };
-
       try {
         const response = await fetch("http://localhost:3000/requests", {
           method: "POST",
@@ -364,17 +424,15 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("Failed to submit request. Please try again.");
       }
     });
-
-    
   }
 
   function setActiveNav(section) {
-    navLinks.forEach(link => {
+    navLinks.forEach((link) => {
       link.classList.toggle("active", link.dataset.section === section);
     });
   }
 
-  navLinks.forEach(link => {
+  navLinks.forEach((link) => {
     link.addEventListener("click", async (e) => {
       e.preventDefault();
       const section = link.dataset.section;
@@ -391,20 +449,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  document.querySelector('.nav-link.text-danger')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html";
-  });
+  document
+    .querySelector(".nav-link.text-danger")
+    ?.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    });
 
   updateBadge();
   renderHome();
 });
-
-
-
-
-
-
-
-        

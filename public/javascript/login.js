@@ -34,16 +34,12 @@ const onSubmitForm = async (event) => {
   const { user, errorCode, errorMessage } =
     await User.findUserByUsernameAndPassword(userName, password);
 
-  if (user) {
+  if (user.isActive == true) {
     localStorage.setItem("loggedInUser", JSON.stringify(user));
     if (user.role === "donor") {
       window.location.href = "donor-dashboard.html";
     } else if (user.role === "student") {
-<<<<<<< HEAD
-      window.location.href = "student-dashboard.html";
-=======
       window.location.href = "student.html";
->>>>>>> bf270ba460ec0c62dcdcf4ecc6425dd3d433364d
     } else {
       window.location.href = "admin-dashboard.html";
     }

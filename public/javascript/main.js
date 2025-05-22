@@ -19,7 +19,10 @@ const allCampaigns = await Campaign.getAllCampaigns();
 const approvedCampaigns = allCampaigns.filter((c) => c.isApproved);
 const allPledges = await Pledge.getAllPledges();
 const categorySelect = document.getElementById("category-filter");
-if (location.href == "http://127.0.0.1:3000/") {
+if (
+  location.href == "http://127.0.0.1:3000/" ||
+  location.href == "http://127.0.0.1:3000/index.html"
+) {
   redirect();
   let toggle = document.querySelector(".toggle-menu");
   console.log(toggle);
@@ -124,7 +127,10 @@ document.addEventListener("click", function (e) {
   if (e.target.classList.contains("donate-btn")) {
     const campaignId = e.target.dataset.campaignId;
     sessionStorage.setItem("campaignId", campaignId);
-    if (window.location.href == "http://127.0.0.1:3000/") {
+    if (
+      window.location.href == "http://127.0.0.1:3000/" ||
+      window.location.href == "http://127.0.0.1:3000/index.html"
+    ) {
       window.location.href = `http://127.0.0.1:3000/pages/login.html`;
     } else if (
       window.location.href == "http://127.0.0.1:3000/pages/donor-dashboard.html"
